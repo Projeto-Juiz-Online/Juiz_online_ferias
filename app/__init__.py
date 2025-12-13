@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 import os
 from app.service.database import db, migrate
 from app.controller.auth_controller import auth_bp  # blueprint auth
@@ -13,13 +13,12 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app, db)
 
-    # importa models depois do db
     from app.models import user, problem, submission
 
     app.register_blueprint(auth_bp)
 
     @app.route("/")
     def home():
-        return "Servidor rodando com banco! 🚀"
+        return render_template("home.html")
 
     return app

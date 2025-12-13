@@ -1,0 +1,58 @@
+/* Reescrevendo regras de coloração e espaçamento */
+
+/*Modo escuro*/
+:root {
+  --bg-body: #121212;
+  --bg-surface: #1e1e1e;
+  --text-body: #e0e0e0;
+  --text-muted: #a0a0a0;
+  --border-color: #2a2a2a;
+}
+
+body{
+    background-color: var(--bg-body);
+    color: var(--text-body);
+}
+.navbar {
+    border-bottom: 1px solid var(--border-color);
+}
+
+
+.surface {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+}
+
+.text-body {
+  color: var(--text-body) !important;
+}
+
+.text-muted {
+  color: var(--text-muted) !important;
+}
+
+.text-link {
+  color: var(--text-body);
+  text-decoration: none;
+}
+
+.text-link:hover {
+  text-decoration: underline;
+}
+
+/*Formulários*/
+.form-control {
+    background-color: var(--bg-body);
+    border: 1px solid var(--border-color);
+    color: var(--text-body);
+}
+.form-control:focus {
+    background-color: var(--bg-surface);
+    color: var(--text-body);
+    border-color: #0d6efd; 
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+.form-control::placeholder {
+    color: var(--text-muted);
+}

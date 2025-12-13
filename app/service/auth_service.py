@@ -4,6 +4,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 def create_user(username, password):
 
+    user_exists = User.query.filter_by(username = username).first()
+    if user_exists:
+        return None
+    
     hash = generate_password_hash(password)
     user = User(username = username, password_hash = hash)
     db.session.add(user)

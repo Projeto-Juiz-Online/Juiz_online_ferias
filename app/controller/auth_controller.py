@@ -10,11 +10,26 @@ def register():
 
         username = request.form.get("username")
         password = request.form.get("password")
+        confirm_password = request.form.get("confirm_password")
 
-        user = create_user(username,password)
+        # verifica se os campos estão preenchidos / tripla verificação (front, back e db)
+        if not username or not password or not username.strip() or not password.strip():
+            flash('Por favor, preencha todos os campos.', 'danger')
+            return render_template('register.html', username=username)
 
-        flash(f'Usuário {username} criado com sucesso!', 'success')
-        return redirect(url_for('auth.login'))
+        # verifica se as senhas conferem
+        if password != confirm_password:
+            flash('As senhas não conferem.', 'danger')
+            return render_template('register.html', username=username)
+        else:
+            user = create_user(username,password)
+
+            if user: 
+                flash(f'Usuário {username} criado com sucesso!', 'success')
+                return redirect(url_for('auth.login'))
+            else:
+                flash('Erro ao criar conta. Esse nome de usuário já existe.', 'danger')
+                return render_template('register.html')
 
     return render_template('register.html')
 

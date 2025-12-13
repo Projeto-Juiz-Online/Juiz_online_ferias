@@ -1,28 +1,45 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Registrar</title>
-</head>
-<body>
-    <h1>Registrar</h1>
-    <form method="POST">
-        <label>Username:</label>
-        <input type="text" name="username" required><br>
-        <label>Password:</label>
-        <input type="password" name="password" required><br>
-        <button type="submit">Registrar</button>
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="d-flex min-vh-100 align-items-center justify-content-center">
+  <div class="surface col-11 col-md-5 col-lg-4 p-4">
+    <h4 class="mb-3 text-center">
+      Registrar
+    </h4>
+    <p class="text-center text-secondary mb-4">
+      Crie sua conta no Juiz Online.
+    </p>
+
+    <form method="post">
+
+      <div class="mb-3">
+        <input class="form-control" name="username" placeholder="Usuário" value="{{ username or '' }}" required>
+      </div>
+
+      <div class="mb-3">
+        <input type="password" class="form-control" name="password" placeholder="Senha" required>
+      </div>
+
+      <div class="mb-3">
+        <input type="password" class="form-control" name="confirm_password" placeholder="Confirme a Senha">
+      </div>
+
+      <button class="btn btn-outline-light w-100">
+        Registrar
+      </button>
+
     </form>
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        <ul>
-        {% for category, message in messages %}
-          <li>{{ message }}</li>
-        {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
-
-    <a href="{{ url_for('auth.login') }}">Já tem conta? Login</a>
-</body>
-</html>
+    <div class="text-center mt-3">
+      <small class="text-secondary">
+        Já tem uma conta?
+        <a href="{{ url_for('auth.login')}}" class="text-link">
+          Login
+        </a>
+      </small>
+    </div>
+  </div>
+</div>
+{% endblock %}
