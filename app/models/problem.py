@@ -9,7 +9,7 @@ class Problem(db.Model):
     description = db.Column(db.Text, nullable=False)
     input_description = db.Column(db.Text, nullable=False)
     output_description = db.Column(db.Text, nullable=False)
-    constraints = db.Column(db.Text)
+    constraints = db.Column(db.Text, nullable = False)
 
     def __repr__(self):
         return f"<Problem {self.name}>"
