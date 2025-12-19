@@ -22,7 +22,7 @@ def create_problem_controller():
         problem = create_problem(name,description,input_description,output_description,constraints)
         
         flash("Problema criado com sucesso!", "success")
-        return redirect(url_for("problem.get_problem", id=problem.id))
+        return redirect(url_for("problem.get_problem_controller", id=problem.id))
 
     return render_template("create_problem.html")
 
@@ -46,7 +46,7 @@ def get_problem_controller(id):
 
     if not problem:
         flash("Problema não encontrado.", "danger")
-        return redirect(url_for("problem.list_problems"))
+        return redirect(url_for("problem.list_problems_controller"))
 
     return render_template("problem_detail.html", problem=problem)
 

@@ -1,0 +1,18 @@
+<h1>Problemas</h1>
+
+<form method="GET">
+  <input name="search" placeholder="Buscar por nome">
+  <button type="submit">Buscar</button>
+</form>
+
+<ul>
+  {% for problem in problems %}
+    <li>
+      <a href="{{ url_for('problem.get_problem_controller', id=problem.id) }}">
+        {{ problem.name }}
+      </a>
+    </li>
+  {% else %}
+    <li>Nenhum problema encontrado</li>
+  {% endfor %}
+</ul>
