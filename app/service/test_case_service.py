@@ -14,3 +14,7 @@ def create_test_case(problem_id,input_data,expected_output):
     db.session.commit()
 
     return test_case
+
+def list_test_cases(problem_id):
+
+    return TestCase.query.filter_by(problem_id = problem_id).all()

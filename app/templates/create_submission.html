@@ -1,0 +1,35 @@
+<!-- templates/create_submission.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nova Submissão</title>
+</head>
+<body>
+    <h1>Nova Submissão</h1>
+
+    <!-- mensagens flash -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul>
+        {% for category, message in messages %}
+          <li style="color: {% if category == 'danger' %}red{% else %}green{% endif %};">{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST">
+        <label for="language">Linguagem:</label><br>
+        <input type="text" name="language" id="language" required><br><br>
+
+        <label for="code">Código:</label><br>
+        <textarea name="code" id="code" rows="10" cols="50" required></textarea><br><br>
+
+        <input type="submit" value="Enviar Submissão">
+    </form>
+
+    <br>
+    <a href="{{ url_for('problem.get_problem_controller', id=problem_id) }}">Voltar ao problema</a>
+</body>
+</html>

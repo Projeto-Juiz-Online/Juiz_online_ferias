@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Casos de Teste</title>
+</head>
+<body>
+
+    <h1>Casos de teste – {{ problem.name }}</h1>
+
+    <a href="{{ url_for('test_case.create_test_case_controller', problem_id=problem.id) }}">
+        Criar novo caso de teste
+    </a>
+
+    <hr>
+
+    {% if test_cases %}
+        <ul>
+            {% for tc in test_cases %}
+                <li>
+                    <strong>Input:</strong>
+                    <pre>{{ tc.input }}</pre>
+
+                    <strong>Output esperado:</strong>
+                    <pre>{{ tc.expected_output }}</pre>
+                </li>
+                <hr>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Nenhum caso de teste cadastrado para este problema.</p>
+    {% endif %}
+
+</body>
+</html>
