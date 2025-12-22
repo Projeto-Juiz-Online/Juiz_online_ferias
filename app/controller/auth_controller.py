@@ -44,7 +44,7 @@ def login():
         if check_password(username, password):
             session['username'] = username  #marca usuario como logado
             flash(f'Bem-vindo, {username}!', 'success')
-            return redirect(url_for('home'))  #rota principal da aplicação
+            return redirect(url_for('home'))  #rota principal da aplicacao
         else:
             flash('Usuário ou senha incorretos.', 'danger')
 

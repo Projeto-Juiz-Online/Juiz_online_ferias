@@ -1,18 +1,63 @@
-<h1>Problemas</h1>
+{% extends "base.html" %}
+{% block title %}Problemas{% endblock %}
 
-<form method="GET">
-  <input name="search" placeholder="Buscar por nome">
-  <button type="submit">Buscar</button>
-</form>
+{% block content %}
 
-<ul>
-  {% for problem in problems %}
-    <li>
-      <a href="{{ url_for('problem.get_problem_controller', id=problem.id) }}">
-        {{ problem.name }}
-      </a>
-    </li>
-  {% else %}
-    <li>Nenhum problema encontrado</li>
-  {% endfor %}
-</ul>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="fw-bold mb-0">Problemas</h1>
+
+    {% if session.get('username') %}
+        <a href="{{ url_for('problem.create_problem_controller') }}"
+           class="btn btn-outline-primary">
+            + Novo Problema
+        </a>
+    {% endif %}
+</div>
+
+<div class="surface p-4 mb-4">
+    <form method="GET" class="row g-2">
+        <div class="col-md-10">
+            <input
+                type="text"
+                name="search"
+                value="{{ request.args.get('search', '') }}"
+                class="form-control form-control-lg"
+                placeholder="Buscar problema pelo nome">
+        </div>
+
+        <div class="col-md-2">
+            <button class="btn btn-primary btn-lg w-100">
+                Buscar
+            </button>
+        </div>
+    </form>
+</div>
+
+<div class="row g-4">
+    {% for problem in problems %}
+        <div class="col-md-6 col-lg-4">
+            <div class="surface p-4 h-100 d-flex flex-column justify-content-between">
+
+                <div>
+                    <h5 class="fw-bold mb-2">
+                        {{ problem.name }}
+                    </h5>
+                </div>
+
+                <a href="{{ url_for('problem.get_problem_controller', id=problem.id) }}"
+                   class="btn btn-outline-primary mt-3 w-100">
+                    Ver problema
+                </a>
+
+            </div>
+        </div>
+    {% else %}
+        <div class="col-12">
+            <div class="alert alert-warning">
+                Nenhum problema encontrado.
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

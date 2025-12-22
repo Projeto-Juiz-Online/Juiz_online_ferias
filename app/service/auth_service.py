@@ -9,7 +9,8 @@ def create_user(username, password):
         return None
     
     hash = generate_password_hash(password)
-    user = User(username = username, password_hash = hash)
+    points = 0
+    user = User(username = username, password_hash = hash, points = points)
     db.session.add(user)
     db.session.commit()
     return user

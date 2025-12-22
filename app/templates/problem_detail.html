@@ -1,12 +1,60 @@
-<h1>{{ problem.name }}</h1>
+{% extends "base.html" %}
+{% block title %}{{ problem.name }}{% endblock %}
 
-<p>{{ problem.description }}</p>
+{% block content %}
 
-<h3>Entrada</h3>
-<p>{{ problem.input_description }}</p>
+<div class="row justify-content-center">
+    <div class="col-lg-9">
 
-<h3>Saída</h3>
-<p>{{ problem.output_description }}</p>
+        <div class="surface p-5 mb-4">
 
-<h3>Restrições</h3>
-<p>{{ problem.constraints }}</p>
+            <h1 class="fw-bold mb-4">
+                {{ problem.name }}
+            </h1>
+
+            <div class="mb-5">
+                <p class="fs-5">
+                    {{ problem.description }}
+                </p>
+            </div>
+
+            <hr class="my-4">
+
+            <div class="mb-4">
+                <h4 class="fw-bold text-primary mb-2">
+                    Entrada
+                </h4>
+                <p>
+                    {{ problem.input_description }}
+                </p>
+            </div>
+
+            <div class="mb-4">
+                <h4 class="fw-bold text-primary mb-2">
+                    Saída
+                </h4>
+                <p>
+                    {{ problem.output_description }}
+                </p>
+            </div>
+
+            <div class="mb-4">
+                <h4 class="fw-bold text-primary mb-2">
+                    Restrições
+                </h4>
+                <p>
+                    {{ problem.constraints }}
+                </p>
+            </div>
+
+        </div>
+
+        {# FUTURO: submissão #}
+        <div class="surface p-4 text-center text-muted">
+            Área de submissão (em breve)
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
