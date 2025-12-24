@@ -74,6 +74,36 @@
                         required></textarea>
                 </div>
 
+                <hr class="my-4">
+
+                <h4 class="fw-bold mb-3 text-warning">
+                    Primeiro Caso de Teste (Obrigatório)
+                </h4>
+
+                <div class="mb-4">
+                    <label class="form-label fw-semibold">
+                        Entrada do Caso de Teste
+                    </label>
+                    <textarea
+                        name="input_data"
+                        class="form-control"
+                        rows="4"
+                        placeholder="Entrada que será passada ao programa"
+                        required></textarea>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-semibold">
+                        Saída Esperada
+                    </label>
+                    <textarea
+                        name="expected_output"
+                        class="form-control"
+                        rows="4"
+                        placeholder="Saída esperada para a entrada acima"
+                        required></textarea>
+                </div>
+
                 <div class="d-flex justify-content-end gap-2">
                     <a href="{{ url_for('problem.list_problems_controller') }}"
                        class="btn btn-outline-secondary">

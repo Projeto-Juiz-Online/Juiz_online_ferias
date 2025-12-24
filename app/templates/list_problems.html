@@ -36,7 +36,19 @@
 <div class="row g-4">
     {% for problem in problems %}
         <div class="col-md-6 col-lg-4">
-            <div class="surface p-4 h-100 d-flex flex-column justify-content-between">
+            <div class="surface p-4 h-100 d-flex flex-column justify-content-between position-relative">
+
+                {% if session.get('username') %}
+                <form method="POST"
+                      action="{{ url_for('problem.delete_problem_controller', id=problem.id) }}"
+                      class="position-absolute top-0 end-0 m-2"
+                      onsubmit="return confirm('Tem certeza que deseja deletar este problema?');">
+                    <button type="submit" class="btn btn-sm btn-outline-primary">
+                        &times;
+                    </button>
+
+                </form>
+                {% endif %}
 
                 <div>
                     <h5 class="fw-bold mb-2">
@@ -51,6 +63,7 @@
 
             </div>
         </div>
+
     {% else %}
         <div class="col-12">
             <div class="alert alert-warning">

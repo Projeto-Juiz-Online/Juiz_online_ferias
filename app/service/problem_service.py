@@ -26,3 +26,16 @@ def search_problems_by_name(query):
 def list_problems():
 
     return Problem.query.all()
+
+def delete_problem(id):
+
+    problem = Problem.query.filter_by(id=id).first()
+
+    if not problem:
+
+        return None
+
+    db.session.delete(problem)
+    db.session.commit()
+
+    return problem

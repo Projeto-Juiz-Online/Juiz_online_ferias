@@ -8,4 +8,3 @@ class TestCase(db.Model):
     input = db.Column(db.Text, nullable=False)
     expected_output = db.Column(db.Text, nullable=False)
 
-    problem = db.relationship("Problem", backref="test_cases")
