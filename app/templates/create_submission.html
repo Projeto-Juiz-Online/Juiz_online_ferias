@@ -1,35 +1,79 @@
-<!-- templates/create_submission.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Nova Submissão</title>
-</head>
-<body>
-    <h1>Nova Submissão</h1>
+{% extends "base.html" %}
+{% block title %}Nova Submissão{% endblock %}
 
-    <!-- mensagens flash -->
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        <ul>
-        {% for category, message in messages %}
-          <li style="color: {% if category == 'danger' %}red{% else %}green{% endif %};">{{ message }}</li>
-        {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
+{% block content %}
 
-    <form method="POST">
-        <label for="language">Linguagem:</label><br>
-        <input type="text" name="language" id="language" required><br><br>
+<div class="row justify-content-center">
+    <div class="col-lg-8">
 
-        <label for="code">Código:</label><br>
-        <textarea name="code" id="code" rows="10" cols="50" required></textarea><br><br>
+        <div class="surface p-5">
 
-        <input type="submit" value="Enviar Submissão">
-    </form>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="fw-bold mb-0">
+                    Nova Submissão
+                </h1>
 
-    <br>
-    <a href="{{ url_for('problem.get_problem_controller', id=problem_id) }}">Voltar ao problema</a>
-</body>
-</html>
+                <a href="{{ url_for('problem.get_problem_controller', id=problem_id) }}"
+                   class="btn btn-outline-secondary">
+                    ← Voltar ao problema
+                </a>
+            </div>
+
+            {# mensagens flash #}
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+
+            <form method="POST">
+
+                <div class="mb-4">
+                    <label for="language" class="form-label fw-semibold">
+                        Linguagem
+                    </label>
+                    <input
+                        type="text"
+                        name="language"
+                        id="language"
+                        class="form-control form-control-lg"
+                        placeholder="Ex: C, Python, Java"
+                        required>
+                </div>
+
+                <div class="mb-4">
+                    <label for="code" class="form-label fw-semibold">
+                        Código
+                    </label>
+                    <textarea
+                        name="code"
+                        id="code"
+                        class="form-control font-monospace"
+                        rows="14"
+                        placeholder="Cole seu código aqui"
+                        required></textarea>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2">
+                    <a href="{{ url_for('problem.get_problem_controller', id=problem_id) }}"
+                       class="btn btn-outline-secondary">
+                        Cancelar
+                    </a>
+
+                    <button type="submit" class="btn btn-primary px-4">
+                        Enviar Submissão
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
