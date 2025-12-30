@@ -49,11 +49,18 @@
 
         </div>
 
-        {# FUTURO: submissão #}
-        <div class="surface p-4 text-center text-muted">
-            Área de submissão (em breve)
-        </div>
+        { submissão }
+        <a href="{{ url_for('submission.create_submission_controller', problem_id=problem.id) }}"
+            class="text-decoration-none">
 
+                <div class="surface p-4 text-center submission-box">
+                    <strong>Enviar solução</strong>
+                    <div class="text-muted mt-2">
+                        Clique aqui para submeter sua solução
+                    </div>
+                </div>
+
+            </a>
     </div>
 </div>
 

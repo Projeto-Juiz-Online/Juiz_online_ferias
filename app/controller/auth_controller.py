@@ -41,10 +41,13 @@ def login():
         username = request.form.get("username")
         password = request.form.get("password")
 
-        if check_password(username, password):
-            session['username'] = username  #marca usuario como logado
-            flash(f'Bem-vindo, {username}!', 'success')
-            return redirect(url_for('home'))  #rota principal da aplicacao
+        user = check_password(username,password)
+
+        if user:
+            session['user_id'] = user.id   
+            session['username'] = user.username
+            flash(f'Bem-vindo, {user.username}!', 'success')
+            return redirect(url_for('home'))
         else:
             flash('Usuário ou senha incorretos.', 'danger')
 
@@ -53,5 +56,6 @@ def login():
 @auth_bp.route('/logout')
 def logout():
     session.pop('username', None)
+    session.pop('user_id', None)
     flash('Logout realizado com sucesso!', 'success')
     return redirect(url_for('auth.login'))

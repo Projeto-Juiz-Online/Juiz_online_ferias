@@ -21,6 +21,9 @@ def check_password(username,password):
 
     if not user:
 
-        return False
+        return None
 
-    return check_password_hash(user.password_hash, password)
+    if check_password_hash(user.password_hash, password):
+        return user
+    
+    return None
