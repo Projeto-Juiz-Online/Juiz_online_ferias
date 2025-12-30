@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Submissões do Problema{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h1 class="fw-bold mb-4">Submissões do Problema</h1>
+
+    <div class="surface p-4">
+
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>Status</th>
+                    <th>Linguagem</th>
+                    <th>Data</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for sub in submissions %}
+                <tr>
+                    <td>{{ sub.status }}</td>
+                    <td>{{ sub.language }}</td>
+                    <td>{{ sub.submitted_at.strftime("%d/%m/%Y %H:%M") }}</td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+
+        <a href="{{ url_for('problem.get_problem_controller', id=problem_id) }}"
+           class="btn btn-secondary mt-3">
+            Voltar ao problema
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

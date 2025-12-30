@@ -21,46 +21,47 @@
             <hr class="my-4">
 
             <div class="mb-4">
-                <h4 class="fw-bold text-primary mb-2">
-                    Entrada
-                </h4>
-                <p>
-                    {{ problem.input_description }}
-                </p>
+                <h4 class="fw-bold text-primary mb-2">Entrada</h4>
+                <p>{{ problem.input_description }}</p>
             </div>
 
             <div class="mb-4">
-                <h4 class="fw-bold text-primary mb-2">
-                    Saída
-                </h4>
-                <p>
-                    {{ problem.output_description }}
-                </p>
+                <h4 class="fw-bold text-primary mb-2">Saída</h4>
+                <p>{{ problem.output_description }}</p>
             </div>
 
             <div class="mb-4">
-                <h4 class="fw-bold text-primary mb-2">
-                    Restrições
-                </h4>
-                <p>
-                    {{ problem.constraints }}
-                </p>
+                <h4 class="fw-bold text-primary mb-2">Restrições</h4>
+                <p>{{ problem.constraints }}</p>
             </div>
 
         </div>
 
-        { submissão }
-        <a href="{{ url_for('submission.create_submission_controller', problem_id=problem.id) }}"
-            class="text-decoration-none">
+        {# ações de submissão #}
+        <div class="d-grid gap-3">
 
+            <a href="{{ url_for('submission.create_submission_controller', problem_id=problem.id) }}"
+               class="text-decoration-none">
                 <div class="surface p-4 text-center submission-box">
                     <strong>Enviar solução</strong>
                     <div class="text-muted mt-2">
                         Clique aqui para submeter sua solução
                     </div>
                 </div>
-
             </a>
+
+            <a href="{{ url_for('submission.list_submission_by_problem_controller', problem_id=problem.id) }}"
+               class="text-decoration-none">
+                <div class="surface p-4 text-center submission-box">
+                    <strong>Ver submissões</strong>
+                    <div class="text-muted mt-2">
+                        Veja todas as submissões deste problema
+                    </div>
+                </div>
+            </a>
+
+        </div>
+
     </div>
 </div>
 

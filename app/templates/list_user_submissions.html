@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Minhas Submissões{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h1 class="fw-bold mb-4">Minhas Submissões</h1>
+
+    {% for data in submissions_by_problem.values() %}
+    <div class="surface p-4 mb-4">
+
+        <h4 class="fw-bold mb-3">
+            {{ data.problem.name }}
+        </h4>
+
+        <ul class="list-group">
+
+            {% for sub in data.submissions %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+
+                <div>
+                    <strong>Status:</strong> {{ sub.status }} <br>
+                    <small class="text-muted">
+                        {{ sub.language }} · {{ sub.submitted_at.strftime("%d/%m/%Y %H:%M") }}
+                    </small>
+                </div>
+
+                <a href="{{ url_for('problem.get_problem_controller', id=data.problem.id) }}"
+                   class="btn btn-outline-primary btn-sm">
+                    Ver problema
+                </a>
+
+            </li>
+            {% endfor %}
+
+        </ul>
+
+    </div>
+    {% endfor %}
+
+</div>
+
+{% endblock %}
