@@ -29,6 +29,21 @@ def create_submission_controller(problem_id):
             return redirect(url_for("problem.get_problem_controller", id=problem_id))
         
         flash("Submissão criada com sucesso!", "success")
-        return redirect(url_for("submission.list_submissions_controller", problem_id=problem_id))
+        return redirect(url_for("problem.get_problem_controller", id=problem_id))
 
     return render_template("create_submission.html", problem_id=problem_id)
+
+@submission_bp.route('/user/submissions')
+def list_submission_by_user_controller():
+    
+    user_id = session.get("user_id")
+
+    if not user_id:
+        flash("Você precisa estar logado para ver suas submissões.", "danger")
+        return redirect(url_for("auth.login"))
+        
+    submissions = list_submissions_by_user(user_id)
+
+    return render_template("list_user_submissions.html",submissions=submissions)
+
+        
