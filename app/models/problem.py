@@ -11,6 +11,7 @@ class Problem(db.Model):
     output_description = db.Column(db.Text, nullable=False)
     constraints = db.Column(db.Text, nullable = False)
     test_cases = db.relationship("TestCase", backref="problem", cascade = "all, delete-orphan")
-
+    submissions = db.relationship('Submission', backref='problem', lazy=True, passive_deletes=True)
+    
     def __repr__(self):
         return f"<Problem {self.name}>"

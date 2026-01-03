@@ -19,8 +19,8 @@ def create_app():
 
     from app.models import user, problem, submission
 
-    with app.app_context():
-        db.create_all() 
+#    with app.app_context():
+#        db.create_all() 
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(problem_bp)

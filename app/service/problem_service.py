@@ -36,7 +36,6 @@ def delete_problem(id):
 
         return None
 
-    Submission.query.filter_by(problem_id=id).delete()
     db.session.delete(problem)
     db.session.commit()
 
