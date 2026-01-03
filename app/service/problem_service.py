@@ -1,5 +1,6 @@
 from app.service.database import db
 from app.models.problem import Problem
+from app.models.submission import Submission
 
 def create_problem(name, description, input_description, output_description, constraints):
 
@@ -35,6 +36,7 @@ def delete_problem(id):
 
         return None
 
+    Submission.query.filter_by(problem_id=id).delete()
     db.session.delete(problem)
     db.session.commit()
 

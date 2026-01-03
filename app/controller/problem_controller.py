@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash,
 from app.service.problem_service import create_problem, list_problems, get_problem, search_problems_by_name, delete_problem
 from app.service.test_case_service import create_test_case
 
+
 problem_bp = Blueprint('problem', __name__)
 
 @problem_bp.route('/problems/new', methods = ['GET','POST'])
@@ -67,6 +68,7 @@ def delete_problem_controller(id):
     flash("Problema deletado com sucesso.", "success")
     return redirect(url_for("problem.list_problems_controller"))
 
+    
 
 @problem_bp.route("/problems/<int:id>", methods=["GET"])
 def get_problem_controller(id):
