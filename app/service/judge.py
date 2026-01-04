@@ -1,5 +1,8 @@
 def normalize(output: str) -> list[str]:
-    return [line.rstrip() for line in output.splitlines()]
+    lines = [line.rstrip() for line in output.splitlines()]
+    while lines and lines[-1] == "":
+        lines.pop()
+    return lines
 
 def judge(run_result: dict, expected_output: str) -> dict:
     status = run_result["status"]
@@ -27,5 +30,5 @@ def judge(run_result: dict, expected_output: str) -> dict:
     else:
         return{
             **run_result,
-            "verdict": "WC"
+            "verdict": "WA"
         }
