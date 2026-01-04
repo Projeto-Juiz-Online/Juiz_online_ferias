@@ -20,7 +20,12 @@ def list_submissions_by_user(user_id):
 
     return Submission.query.filter_by(user_id=user_id).all()
 
-def list_submissions_by_problem(problem_id):
+def list_submissions_by_problem(problem_id, user_id = None):
 
-    return Submission.query.filter_by(problem_id=problem_id).all()
+    query = Submission.query.filter_by(problem_id=problem_id)
 
+    if user_id is not None:
+
+        query = query.filter_by(user_id=user_id)
+
+    return query.order_by(Submission.submitted_at.desc()).all()

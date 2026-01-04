@@ -6,16 +6,13 @@
 <div class="row justify-content-center">
     <div class="col-lg-9">
 
+        <!-- Detalhes do problema -->
         <div class="surface p-5 mb-4">
 
-            <h1 class="fw-bold mb-4">
-                {{ problem.name }}
-            </h1>
+            <h1 class="fw-bold mb-4">{{ problem.name }} (ID: {{ problem.id }})</h1>
 
             <div class="mb-5">
-                <p class="fs-5">
-                    {{ problem.description }}
-                </p>
+                <p class="fs-5">{{ problem.description }}</p>
             </div>
 
             <hr class="my-4">
@@ -37,30 +34,44 @@
 
         </div>
 
-        {# ações de submissão #}
-        <div class="d-grid gap-3">
-
+        <!-- Ação de submissão -->
+        <div class="d-grid gap-3 mb-4">
             <a href="{{ url_for('submission.create_submission_controller', problem_id=problem.id) }}"
                class="text-decoration-none">
                 <div class="surface p-4 text-center submission-box">
                     <strong>Enviar solução</strong>
-                    <div class="text-muted mt-2">
-                        Clique aqui para submeter sua solução
-                    </div>
+                    <div class="text-muted mt-2">Clique aqui para submeter sua solução</div>
                 </div>
             </a>
-
-            <a href="{{ url_for('submission.list_submission_by_problem_controller', problem_id=problem.id) }}"
-               class="text-decoration-none">
-                <div class="surface p-4 text-center submission-box">
-                    <strong>Ver submissões</strong>
-                    <div class="text-muted mt-2">
-                        Veja todas as submissões deste problema
-                    </div>
-                </div>
-            </a>
-
         </div>
+
+        <!-- Submissões do usuário -->
+        {% if submissions %}
+        <div class="mt-4">
+            <h3 class="fw-bold mb-3">Suas Submissões</h3>
+            <div class="d-flex flex-row flex-wrap gap-3">
+                {% for sub in submissions %}
+                <div class="p-3 submission-box text-center
+                    {% if sub.verdict == 'AC' %}bg-success text-white
+                    {% elif sub.verdict == 'WA' %}bg-danger text-white
+                    {% elif sub.verdict == 'TLE' %}bg-warning
+                    {% else %}bg-light{% endif %}"
+                    style="min-width: 120px;">
+                    
+                    <div><strong>Submission #{{ sub.id }}</strong></div>
+                    <div>ID do Problema: {{ sub.problem_id }}</div>
+                    <div>{{ sub.verdict }}</div>
+                    <div class="mt-1">{{ sub.language }}</div>
+                    <div class="mt-1 text-muted">{{ sub.submitted_at.strftime("%d/%m/%Y %H:%M") }}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% else %}
+        <div class="mt-4 text-muted">
+            Você ainda não enviou nenhuma submissão para este problema.
+        </div>
+        {% endif %}
 
     </div>
 </div>

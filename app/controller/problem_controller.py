@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from app.service.problem_service import create_problem, list_problems, get_problem, search_problems_by_name, delete_problem
 from app.service.test_case_service import create_test_case
+from app.service.submission_service import list_submissions_by_problem
 
 
 problem_bp = Blueprint('problem', __name__)
@@ -78,6 +79,12 @@ def get_problem_controller(id):
     if not problem:
         flash("Problema não encontrado.", "danger")
         return redirect(url_for("problem.list_problems_controller"))
+    
+    user_id = session.get("user_id")
 
-    return render_template("problem_detail.html", problem=problem)
+    user_submissions = []
+    if user_id:
+        user_submissions = list_submissions_by_problem(problem_id=id, user_id=user_id)
+
+    return render_template("problem_detail.html", problem=problem, submissions = user_submissions)
 

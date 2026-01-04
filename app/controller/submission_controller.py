@@ -57,20 +57,3 @@ def list_submission_by_user_controller():
 
     return render_template("list_user_submissions.html", submissions_by_problem=submissions_by_problem)
 
-@submission_bp.route('/problems/<int:problem_id>/submissions')
-def list_submission_by_problem_controller(problem_id):
-
-    user_id = session.get("user_id")
-
-    if not user_id:
-        flash("Você precisa estar logado para ver as submissões.", "danger")
-        return redirect(url_for("auth.login"))
-    
-    submissions = list_submissions_by_problem(problem_id)
-
-    if not submissions:
-
-        flash("Envie submissões primeiro para poder visualizá-las.")
-        return redirect(url_for("submission.create_submission_controller",problem_id=problem_id))
-
-    return render_template("list_problem_submissions.html",submissions=submissions,problem_id=problem_id)
