@@ -11,7 +11,7 @@
     <div class="col-12 mb-4">
         <div class="surface p-5 text-center">
             <h1 class="display-5 fw-bold mb-3">
-                Bem-vindo de volta, {{ session.username }}!
+                Bem-vindo de volta, {{ current_user.username }}!
             </h1>
 
             {% if current_user.is_authenticated and current_user.is_admin %}

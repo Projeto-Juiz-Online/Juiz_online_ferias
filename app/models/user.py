@@ -44,5 +44,3 @@ class User(db.Model):
         É por isso que converti self.id para string aqui.
         """
         return str(self.id)
-    
-
