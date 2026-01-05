@@ -4,6 +4,7 @@ from app.models.problem import Problem
 from app.models.user import User
 from app.service.judge import judge
 from app.service.runner.python_runner import run_python
+from app.service.runner.c_runner import run_c
 from app.models.test_case import TestCase
 
 def create_submission(language,user_id,problem_id,code):
@@ -25,8 +26,15 @@ def create_submission(language,user_id,problem_id,code):
 
     for test in test_cases:
         
-        run_result = run_python(code,test.input)
-        result = judge(run_result, test.expected_output)
+        if language == "python":
+
+            run_result = run_python(code,test.input)
+            result = judge(run_result, test.expected_output)
+
+        elif language == "c":
+
+            run_result = run_c(code,test.input)
+            result = judge(run_result, test.expected_output)
 
         if result["verdict"] != "AC":
             if result["verdict"] == "TLE" or result["verdict"] == "RUNTIME_ERROR": 
