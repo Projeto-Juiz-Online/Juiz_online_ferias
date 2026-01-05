@@ -4,7 +4,8 @@
 
 {% block content %}
 
-{% if session.get('username') %}
+
+{% if current_user.is_authenticated %}
 
 <div class="row">
     <div class="col-12 mb-4">
@@ -12,6 +13,15 @@
             <h1 class="display-5 fw-bold mb-3">
                 Bem-vindo de volta, {{ session.username }}!
             </h1>
+
+            {% if current_user.is_authenticated and current_user.is_admin %}
+                <div class="mb-4">
+                    <span class="badge bg-warning text-dark border border-warning">
+                        👑 Modo Administrador Ativo
+                    </span>
+                </div>
+            {% endif %}
+
             <p class="lead text-muted mb-4">
                 Pronto para resolver mais problemas hoje?
             </p>

@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from app.service.auth_service import create_user, check_password
+from flask_login import login_user, logout_user, login_required
 
 auth_bp = Blueprint('auth', __name__)
 
@@ -44,9 +45,10 @@ def login():
         user = check_password(username,password)
 
         if user:
-            session['user_id'] = user.id   
-            session['username'] = user.username
+            
+            login_user(user)  
             flash(f'Bem-vindo, {user.username}!', 'success')
+            
             return redirect(url_for('home'))
         else:
             flash('Usuário ou senha incorretos.', 'danger')
@@ -54,8 +56,9 @@ def login():
     return render_template('login.html')
     
 @auth_bp.route('/logout')
+@login_required
 def logout():
-    session.pop('username', None)
-    session.pop('user_id', None)
+    logout_user()
+    
     flash('Logout realizado com sucesso!', 'success')
     return redirect(url_for('auth.login'))

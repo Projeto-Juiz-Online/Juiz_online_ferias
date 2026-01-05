@@ -25,11 +25,11 @@ class User(db.Model):
         return True 
     
     @property
-    def is_actice(self):
+    def is_active(self):
         """
         Retorna True se a conta estiver ativa.
         """
-        return False
+        return True
 
     @property
     def is_anonymous(self):
@@ -44,3 +44,5 @@ class User(db.Model):
         É por isso que converti self.id para string aqui.
         """
         return str(self.id)
+    
+
