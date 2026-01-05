@@ -47,18 +47,18 @@
 
         <!-- Submissões do usuário -->
         {% if submissions %}
-        <div class="mt-4">
+        <div class="mt-4" id="submissions-container">
             <h3 class="fw-bold mb-3">Suas Submissões</h3>
-            <div class="d-flex flex-column gap-2">
-                {% for sub in submissions | reverse %}
-                <div class="d-flex align-items-center gap-3 p-3 bg-primary text-white rounded"
-                    style="border-radius: 6px;">
+            <div class="d-flex flex-column gap-2" id="submissions-list">
+                {% for sub in submissions %}
+                <div class="d-flex align-items-center gap-3 p-3 bg-primary text-white rounded submission-item {% if sub.status == 'RUNNING' %}submission-running{% endif %}"
+                    style="border-radius: 6px;" data-submission-id="{{ sub.id }}">
                     
                     <div><strong>Submission #{{ sub.id }}</strong></div>
                     <span class="text-white-50">|</span>
                     <div>
                         <small class="text-white-50">Status:</small>
-                        <strong>{{ sub.status }}</strong>
+                        <strong class="submission-status">{{ sub.status }}</strong>
                     </div>
                     <span class="text-white-50">|</span>
                     <div>
