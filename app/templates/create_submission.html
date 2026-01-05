@@ -37,13 +37,14 @@
                     <label for="language" class="form-label fw-semibold">
                         Linguagem
                     </label>
-                    <input
-                        type="text"
-                        name="language"
-                        id="language"
-                        class="form-control form-control-lg"
-                        placeholder="Ex: C, Python, Java"
-                        required>
+                    <select name="language" id="language" class="form-select form-select-lg" required>
+                        <option value="" disabled selected>Selecione a linguagem</option>
+                        <option value="python">Python</option>
+                        <option value="c">C</option>
+                        <option value="cpp">C++</option>
+                        <option value="csharp">C#</option>
+                        <option value="java">Java</option>
+                    </select>
                 </div>
 
                 <div class="mb-4">
