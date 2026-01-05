@@ -49,20 +49,27 @@
         {% if submissions %}
         <div class="mt-4">
             <h3 class="fw-bold mb-3">Suas Submissões</h3>
-            <div class="d-flex flex-row flex-wrap gap-3">
+            <div class="d-flex flex-column gap-2">
                 {% for sub in submissions %}
-                <div class="p-3 submission-box text-center
-                    {% if sub.verdict == 'AC' %}bg-success text-white
-                    {% elif sub.verdict == 'WA' %}bg-danger text-white
-                    {% elif sub.verdict == 'TLE' %}bg-warning
-                    {% else %}bg-light{% endif %}"
-                    style="min-width: 120px;">
+                <div class="d-flex align-items-center gap-3 p-3 bg-primary text-white rounded"
+                    style="border-radius: 6px;">
                     
                     <div><strong>Submission #{{ sub.id }}</strong></div>
-                    <div>ID do Problema: {{ sub.problem_id }}</div>
-                    <div>{{ sub.verdict }}</div>
-                    <div class="mt-1">{{ sub.language }}</div>
-                    <div class="mt-1 text-muted">{{ sub.submitted_at.strftime("%d/%m/%Y %H:%M") }}</div>
+                    <span class="text-white-50">|</span>
+                    <div>
+                        <small class="text-white-50">Status:</small>
+                        <strong>{{ sub.status }}</strong>
+                    </div>
+                    <span class="text-white-50">|</span>
+                    <div>
+                        <small class="text-white-50">Linguagem:</small>
+                        <strong>{{ sub.language }}</strong>
+                    </div>
+                    <span class="text-white-50">|</span>
+                    <div>
+                        <small class="text-white-50">Enviado em:</small>
+                        <strong>{{ sub.submitted_at.strftime("%d/%m/%Y %H:%M") }}</strong>
+                    </div>
                 </div>
                 {% endfor %}
             </div>

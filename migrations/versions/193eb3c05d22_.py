@@ -1,8 +1,8 @@
-"""Banco Novo com Cascade
+"""empty message
 
-Revision ID: a610e2e6600e
+Revision ID: 193eb3c05d22
 Revises: 
-Create Date: 2026-01-03 13:48:30.665305
+Create Date: 2026-01-04 21:53:59.731727
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'a610e2e6600e'
+revision = '193eb3c05d22'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -43,7 +43,7 @@ def upgrade():
     sa.Column('problem_id', sa.Integer(), nullable=False),
     sa.Column('submitted_at', sa.DateTime(), nullable=True),
     sa.Column('code', sa.Text(), nullable=False),
-    sa.ForeignKeyConstraint(['problem_id'], ['problems.id'], ondelete='CASCADE'),
+    sa.ForeignKeyConstraint(['problem_id'], ['problems.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
