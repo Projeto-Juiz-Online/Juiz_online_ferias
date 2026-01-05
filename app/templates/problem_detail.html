@@ -50,7 +50,7 @@
         <div class="mt-4">
             <h3 class="fw-bold mb-3">Suas Submissões</h3>
             <div class="d-flex flex-column gap-2">
-                {% for sub in submissions %}
+                {% for sub in submissions | reverse %}
                 <div class="d-flex align-items-center gap-3 p-3 bg-primary text-white rounded"
                     style="border-radius: 6px;">
                     
