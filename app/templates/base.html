@@ -40,8 +40,7 @@
               <li class="nav-item me-3">
                 <button
                   onclick="toggleTheme()"
-                  class="btn btn-link text-decoration-none"
-                  style="font-size: 1.2rem"
+                  class="btn btn-link text-decoration-none btn-theme-toggle"
                 >
                   <span id="theme-icon">🌙</span>
                 </button>
@@ -65,11 +64,7 @@
                       Admin 🔒
                     </a>
                     <ul
-                      class="dropdown-menu dropdown-menu-end"
-                      style="
-                        background-color: var(--bg-surface);
-                        border-color: var(--border-color);
-                      "
+                      class="dropdown-menu dropdown-menu-end dropdown-admin"
                     >
                       <li>
                         <h6 class="dropdown-header text-muted">Gerenciamento</h6>
@@ -78,7 +73,6 @@
                         <a
                           class="dropdown-item"
                           href="{{ url_for('admin.new_problem') }}"
-                          style="color: var(--text-body)"
                         >
                           ➕ Novo Problema
                         </a>
@@ -87,7 +81,6 @@
                         <a
                           class="dropdown-item"
                           href="{{ url_for('admin.dashboard') }}"
-                          style="color: var(--text-body)"
                         >
                           📊 Dashboard Admin
                         </a>
@@ -135,11 +128,7 @@
     </div>
 
     <footer
-      class="py-3 mt-4 border-top"
-      style="
-        background-color: var(--bg-surface);
-        border-color: var(--border-color) !important;
-      "
+      class="py-3 mt-4 border-top footer-custom"
     >
       <div class="container text-center">
         <span class="text-muted">

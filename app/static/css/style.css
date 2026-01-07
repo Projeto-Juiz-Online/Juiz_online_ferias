@@ -1,138 +1,462 @@
-/* Reescrevendo regras de coloração e espaçamento */
+/* =========================================
+   1. VARIÁVEIS E TEMAS
+   ========================================= */
 
-/*Modo escuro*/
 :root {
-  --bg-body: #121212;
-  --bg-surface: #1e1e1e;
-  --text-body: #e0e0e0;
-  --text-muted: #a0a0a0;
-  --border-color: #2a2a2a;
+  --font-main: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-code: "Fira Code", "Consolas", "Monaco", "Courier New", monospace;
+
+  --bg-body: #0d1117;         
+  --bg-surface: #161b22;      
+  --bg-input: #0d1117;         
+  --text-body: #e6edf3;        
+  --text-heading: #ffffff;     
+  --text-muted: #d0d6dd;       
+  --border-color: #30363d;     
+  
+  --primary-color: #58a6ff;    
+  --success-color: #238636;    
+  --danger-color: #da3633;     
+  --warning-color: #d29922;    
+
+  --code-bg: #0d1117;          
+  --code-border: #30363d;
+
 }
 
-/*Modo claro*/
+/* Modo Claro */
 [data-theme="light"] {
-    --bg-body: #f8f9fa;       
-    --bg-surface: #ffffff;   
-    --text-body: #212529;     
-    --text-muted: #6c757d;    
-    --border-color: #dee2e6;  
+    --bg-body: #f6f8fa;
+    --bg-surface: #ffffff;
+    --bg-input: #ffffff;
+    --text-body: #24292f;
+    --text-heading: #1f2328;
+    --text-muted: #57606a;
+    --border-color: #d0d7de;
+
+    --primary-color: #0969da;
+    --success-color: #1a7f37;
+    --danger-color: #cf222e;
+    --warning-color: #9a6700;
+
+    --code-bg: #f6f8fa;
+    --code-border: #d0d7de;
+
+    
 }
 
-[data-theme="light"] .form-control {
-    background-color: var(--bg-surface);
+/* =========================================
+   2. GERAL E TIPOGRAFIA
+   ========================================= */
+
+body {
+    background-color: var(--bg-body);
     color: var(--text-body);
-}
-.navbar-custom {
-    background-color: var(--bg-surface) !important;
-    border-bottom: 1px solid var(--border-color);
-    transition: background-color 0.3s, border-color 0.3s;
+    font-family: var(--font-main);
+    line-height: 1.6; 
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.navbar-custom .navbar-brand,
-.navbar-custom .nav-link,
-.navbar-custom .navbar-text {
-    color: var(--text-body) !important;
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-heading);
+    font-weight: 700;
+    letter-spacing: -0.5px; 
 }
 
-.navbar-custom .nav-link:hover {
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+a:hover {
+    color: var(--primary-color);
     opacity: 0.8;
 }
 
-.navbar-custom .navbar-toggler-icon {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.55)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+p {
+    color: var(--text-body) !important;
 }
 
-[data-theme="light"] .navbar-custom .navbar-toggler-icon {
-    filter: invert(1) grayscale(100%) brightness(0%);
-}
-
-.btn-adaptive {
-    color: var(--text-body);            
-    border: 1px solid var(--text-body); 
-    background-color: transparent;
-    transition: all 0.3s;
-}
-
-.btn-adaptive:hover {
-    background-color: var(--text-body); 
-    color: var(--bg-body);
-}
-
-body{
+body {
     background-color: var(--bg-body);
-    color: var(--text-body);
-}
-.navbar {
-    border-bottom: 1px solid var(--border-color);
+    color: var(--text-body) !important;
+    font-family: var(--font-main);
+    line-height: 1.6; 
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+
+/* =========================================
+   3. COMPONENTES DE INTERFACE
+   ========================================= */
+
+.navbar-custom {
+    background-color: var(--bg-surface) !important;
+    border-bottom: 1px solid var(--border-color);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.navbar-custom .navbar-brand {
+    color: var(--text-heading) !important;
+    font-weight: 800;
+    font-size: 1.5rem;
+}
+
+.navbar-custom .nav-link,
+.navbar-custom .navbar-text {
+    color: var(--text-body) !important;
+    font-weight: 500;
+}
+
+.text-muted {
+    color: var(--text-muted) !important;
+}
 
 .surface {
     background-color: var(--bg-surface);
     border: 1px solid var(--border-color);
-    border-radius: 0.5rem;
+    border-radius: 8px; 
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.04); 
 }
 
-.text-body {
-  color: var(--text-body) !important;
-}
-
-.text-muted {
-  color: var(--text-muted) !important;
-}
-
-.text-link {
-  color: var(--text-body);
-  text-decoration: none;
-}
-
-.text-link:hover {
-  text-decoration: underline;
-}
-
-/*Formulários*/
-.form-control {
-    background-color: var(--bg-body);
+.form-control, .form-select {
+    background-color: var(--bg-input);
     border: 1px solid var(--border-color);
     color: var(--text-body);
+    border-radius: 6px;
+    padding: 0.7rem 1rem;
 }
-.form-control:focus {
-    background-color: var(--bg-surface);
+
+.form-control:focus, .form-select:focus {
+    background-color: var(--bg-input);
     color: var(--text-body);
-    border-color: #0d6efd; 
-    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.15); 
 }
+
 .form-control::placeholder {
     color: var(--text-muted);
+    opacity: 0.7;
 }
 
-/* Loading animation for running submissions */
+/* Botões */
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-color);
+    opacity: 0.9;
+}
+
+.btn-outline-secondary {
+    color: var(--text-muted);
+    border-color: var(--border-color);
+}
+
+.btn-outline-secondary:hover {
+    background-color: var(--border-color);
+    color: var(--text-heading);
+}
+
+/* =========================================
+   4. ELEMENTOS ESPECÍFICOS DE PROBLEMAS
+   ========================================= */
+
+pre, code, .font-monospace {
+    font-family: var(--font-code) !important;
+}
+
+.card-header {
+    border-bottom: 1px solid var(--border-color) !important;
+    color: var(--text-muted) !important;
+    letter-spacing: 1px;
+}
+
+.card-body pre {
+    background-color: var(--code-bg); 
+    border: 1px solid var(--code-border);
+    border-radius: 6px;
+    padding: 1rem;
+    color: var(--text-body);
+}
+
+.badge {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.text-success { color: #4ade80 !important; }
+.bg-success { background-color: rgba(74, 222, 128, 0.2) !important; } 
+.text-danger { color: #f87171 !important; }
+.bg-danger { background-color: rgba(248, 113, 113, 0.2) !important; }
+
+.text-warning { color: #fbbf24 !important; }
+.bg-warning { background-color: rgba(251, 191, 36, 0.2) !important; }
+
+.btn-theme-toggle {
+    font-size: 1.2rem;
+}
+
+.dropdown-admin {
+    background-color: var(--bg-surface);
+    border-color: var(--border-color);
+}
+
+.dropdown-admin .dropdown-item {
+    color: var(--text-body);
+}
+
+.dropdown-admin .dropdown-item:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--text-heading);
+}
+
+.footer-custom {
+    background-color: var(--bg-surface);
+    border-color: var(--border-color) !important;
+}
+
+.table-problems {
+    color: var(--text-body);
+}
+
+.table-problems-head {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.table-problems-row {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.table-problems-row:hover {
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
+.problem-text {
+    white-space: pre-line;
+    color: var(--text-body);
+}
+
+.card-input,
+.card-output {
+    background-color: var(--bg-body);
+}
+
+.pre-wrap {
+    white-space: pre-wrap;
+}
+
+/* =========================================
+   5. TABELAS
+   ========================================= */
+
+.table {
+    color: var(--text-body);
+    border-color: var(--border-color);
+}
+
+.table > :not(caption) > * > * {
+    background-color: transparent; 
+    border-bottom-color: var(--border-color);
+    padding: 1rem 0.5rem;
+}
+
+.table-hover tbody tr:hover td {
+    color: var(--text-heading);
+    background-color: rgba(255, 255, 255, 0.03); 
+}
+
+/* =========================================
+   6. ANIMAÇÕES
+   ========================================= */
+
 @keyframes pulse {
-    0%, 100% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0.6;
-    }
-}
-
-@keyframes shimmer {
-    0% {
-        background-position: -1000px 0;
-    }
-    100% {
-        background-position: 1000px 0;
-    }
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
 }
 
 .submission-running {
     animation: pulse 1.5s ease-in-out infinite;
-    background: linear-gradient(
-        90deg,
-        rgba(255, 255, 255, 0.1) 0%,
-        rgba(255, 255, 255, 0.2) 50%,
-        rgba(255, 255, 255, 0.1) 100%
-    );
-    background-size: 1000px 100%;
-    animation: shimmer 2s infinite, pulse 1.5s ease-in-out infinite;
+    border-left: 3px solid var(--warning-color);
 }
+
+#theme-icon {
+    transition: transform 0.5s ease;
+}
+button:active #theme-icon {
+    transform: rotate(360deg);
+}
+
+/* =========================================
+   7. BOTÕES PERSONALIZADOS
+   ========================================= */
+
+.btn-outline-adaptive {
+    background-color: transparent;
+    
+    color: var(--text-body);            
+    border: 1px solid var(--text-body); 
+    
+    font-weight: 600;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-outline-adaptive:hover {
+    
+    background-color: var(--text-body); 
+    
+    color: var(--bg-body);              
+    
+    border-color: var(--text-body);
+}
+
+.no_found {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+}   
+
+/* =========================================
+   8. TABELA DASHBOARD ADMIN
+   ========================================= */
+
+.table-dashboard {
+    --bs-table-bg: transparent; 
+    --bs-table-accent-bg: transparent;
+    color: var(--text-body);
+}
+
+.table-dashboard thead th {
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding-bottom: 1rem;
+}
+
+/* =========================================
+     9. RANKING STYLES
+     ========================================= */
+
+.col-rank {
+    width: 80px;
+}
+
+.avatar-small {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    background-color: var(--bg-surface);
+    color: var(--text-heading);
+    border: 1px solid var(--border-color);
+}
+
+.avatar-gold {
+    background-color: rgba(255, 215, 0, 0.2);
+    color: #ffd700;
+    border-color: #ffd700;
+}
+
+.badge-leader {
+    font-size: 0.6rem;
+}
+
+.rank-medal {
+    font-size: 1.25rem;
+}
+
+.row-gold { background-color: rgba(255, 215, 0, 0.03); }
+.row-silver { background-color: rgba(192, 192, 192, 0.03); }
+.row-bronze { background-color: rgba(205, 127, 50, 0.03); }
+
+.table-dashboard tbody td {
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 0.5rem;
+    vertical-align: middle;
+}
+
+.table-dashboard tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.table-dashboard tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.table-dashboard tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.03); 
+}
+
+.avatar-small {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: rgba(88, 166, 255, 0.15); 
+    color: var(--primary-color);
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+}
+
+.link-problem {
+    color: var(--text-body);
+    transition: color 0.2s;
+}
+
+.link-problem:hover {
+    color: var(--primary-color);
+}
+
+/* =========================================
+   9. RANKING
+   ========================================= */
+
+/* Medalha (Círculo ou Ícone) */
+.rank-medal {
+    font-size: 1.5rem;
+    line-height: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Efeito de brilho nas linhas do Top 3 */
+.row-gold {
+    background: linear-gradient(90deg, rgba(255, 215, 0, 0.05) 0%, transparent 100%);
+    border-left: 4px solid #ffd700;
+}
+
+.row-silver {
+    background: linear-gradient(90deg, rgba(192, 192, 192, 0.05) 0%, transparent 100%);
+    border-left: 4px solid #c0c0c0;
+}
+
+.row-bronze {
+    background: linear-gradient(90deg, rgba(205, 127, 50, 0.05) 0%, transparent 100%);
+    border-left: 4px solid #cd7f32;
+}
+
+/* Ajuste para remover a borda padrão nas linhas premiadas se necessário */
+.row-gold td, .row-silver td, .row-bronze td {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Avatar Dourado para o 1º lugar é controlado inline no HTML, 
+   mas você pode criar classes específicas se preferir */

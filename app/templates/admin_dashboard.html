@@ -1,47 +1,52 @@
 {% extends "base.html" %}
-{% block title %}Dashboard Admin{% endblock %}
+{% block title %}Dashboard Admin | Juiz Online{% endblock %}
 
 {% block content %}
 
-<div class="mb-4">
-    <h1 class="fw-bold">Painel Administrativo 🛠️</h1>
-    <p class="text-muted">Visão geral do sistema Juiz Online.</p>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="fw-bold mb-0">Painel Administrativo 🛠️</h1>
+        <p class="text-muted small">Visão geral e métricas do sistema.</p>
+    </div>
 </div>
 
 <div class="row g-4 mb-5">
     
     <div class="col-md-4">
-        <div class="surface p-4 border-start border-4 border-primary h-100 shadow-sm">
-            <div class="d-flex justify-content-between align-items-center">
+        <div class="surface p-4 h-100 shadow-sm position-relative overflow-hidden border-0" 
+             style="border-left: 5px solid var(--primary-color) !important;">
+            <div class="d-flex justify-content-between align-items-center position-relative z-1">
                 <div>
-                    <h6 class="text-muted text-uppercase fw-bold mb-1">Usuários</h6>
-                    <h2 class="mb-0 fw-bold">{{ total_users }}</h2>
+                    <h6 class="text-muted text-uppercase fw-bold small mb-2">Total Usuários</h6>
+                    <h2 class="mb-0 fw-bold display-6">{{ total_users }}</h2>
                 </div>
-                <div class="fs-1">👥</div>
+                <div class="fs-1 opacity-25">👥</div>
             </div>
         </div>
     </div>
 
     <div class="col-md-4">
-        <div class="surface p-4 border-start border-4 border-warning h-100 shadow-sm">
-            <div class="d-flex justify-content-between align-items-center">
+        <div class="surface p-4 h-100 shadow-sm position-relative overflow-hidden border-0" 
+             style="border-left: 5px solid var(--warning-color) !important;">
+            <div class="d-flex justify-content-between align-items-center position-relative z-1">
                 <div>
-                    <h6 class="text-muted text-uppercase fw-bold mb-1">Problemas</h6>
-                    <h2 class="mb-0 fw-bold">{{ total_problems }}</h2>
+                    <h6 class="text-muted text-uppercase fw-bold small mb-2">Problemas Ativos</h6>
+                    <h2 class="mb-0 fw-bold display-6">{{ total_problems }}</h2>
                 </div>
-                <div class="fs-1">🧩</div>
+                <div class="fs-1 opacity-25">🧩</div>
             </div>
         </div>
     </div>
 
     <div class="col-md-4">
-        <div class="surface p-4 border-start border-4 border-success h-100 shadow-sm">
-            <div class="d-flex justify-content-between align-items-center">
+        <div class="surface p-4 h-100 shadow-sm position-relative overflow-hidden border-0" 
+             style="border-left: 5px solid var(--success-color) !important;">
+            <div class="d-flex justify-content-between align-items-center position-relative z-1">
                 <div>
-                    <h6 class="text-muted text-uppercase fw-bold mb-1">Submissões</h6>
-                    <h2 class="mb-0 fw-bold">{{ total_submissions }}</h2>
+                    <h6 class="text-muted text-uppercase fw-bold small mb-2">Submissões</h6>
+                    <h2 class="mb-0 fw-bold display-6">{{ total_submissions }}</h2>
                 </div>
-                <div class="fs-1">🚀</div>
+                <div class="fs-1 opacity-25">🚀</div>
             </div>
         </div>
     </div>
@@ -50,63 +55,89 @@
 <div class="row g-4">
     
     <div class="col-lg-4">
-        <div class="surface p-4 h-100">
-            <h5 class="fw-bold mb-4">⚡ Ações Rápidas</h5>
+        <div class="surface p-4 h-100 shadow-sm border-0">
+            <h5 class="fw-bold mb-4 border-bottom pb-2">⚡ Ações Rápidas</h5>
             
             <div class="d-grid gap-3">
-                <a href="{{ url_for('admin.new_problem') }}" class="btn btn-primary btn-lg text-start">
-                    ➕ Criar Novo Problema
+                <a href="{{ url_for('admin.new_problem') }}" class="btn btn-primary btn-lg text-start d-flex align-items-center gap-3 shadow-sm">
+                    <span class="fs-4">➕</span> 
+                    <div>
+                        <div class="fw-bold" style="font-size: 1rem;">Novo Problema</div>
+                        <small class="opacity-75" style="font-size: 0.8rem;">Cadastrar desafio</small>
+                    </div>
                 </a>
                 
-                <a href="{{ url_for('problem.list_problems_controller') }}" class="btn btn-outline-secondary btn-lg text-start">
-                    📂 Gerenciar Problemas
+                <a href="{{ url_for('problem.list_problems_controller') }}" class="btn btn-outline-secondary btn-lg text-start d-flex align-items-center gap-3">
+                    <span class="fs-4">📂</span>
+                    <div>
+                        <div class="fw-bold" style="font-size: 1rem;">Gerenciar Problemas</div>
+                        <small class="text-muted" style="font-size: 0.8rem;">Editar ou excluir</small>
+                    </div>
                 </a>
                 
-                <button class="btn btn-outline-secondary btn-lg text-start" disabled>
-                    👥 Gerenciar Usuários (Em breve)
+                <button class="btn btn-outline-secondary btn-lg text-start d-flex align-items-center gap-3 opacity-50" disabled>
+                    <span class="fs-4">👥</span>
+                    <div>
+                        <div class="fw-bold" style="font-size: 1rem;">Gerenciar Usuários</div>
+                        <small class="text-muted" style="font-size: 0.8rem;">Em breve</small>
+                    </div>
                 </button>
             </div>
         </div>
     </div>
 
     <div class="col-lg-8">
-        <div class="surface p-4 h-100">
-            <h5 class="fw-bold mb-4">🕒 Atividade Recente</h5>
+        <div class="surface p-4 h-100 shadow-sm border-0">
+            <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
+                <h5 class="fw-bold mb-0">🕒 Atividade Recente</h5>
+                <a href="{{ url_for('ranking.get_ranking_controller') }}" class="text-decoration-none small fw-bold">Ver Ranking &rarr;</a>
+            </div>
             
             {% if recent_submissions %}
             <div class="table-responsive">
-                <table class="table table-hover align-middle">
+                <table class="table table-dashboard align-middle mb-0">
                     <thead>
                         <tr>
                             <th>ID</th>
                             <th>Usuário</th>
                             <th>Problema</th>
-                            <th>Linguagem</th>
+                            <th>Lang</th>
                             <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for sub in recent_submissions %}
                         <tr>
-                            <td>#{{ sub.id }}</td>
+                            <td class="text-muted font-monospace small">#{{ sub.id }}</td>
                             <td>
-                                <strong>{{ sub.user.username }}</strong>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="avatar-small">
+                                        {{ sub.user.username[:1] | upper }}
+                                    </div>
+                                    <strong class="text-body">{{ sub.user.username }}</strong>
+                                </div>
                             </td>
                             <td>
-                                <a href="{{ url_for('problem.get_problem_controller', id=sub.problem.id) }}" class="text-decoration-none">
+                                <a href="{{ url_for('problem.get_problem_controller', id=sub.problem.id) }}" class="text-decoration-none fw-semibold link-problem">
                                     {{ sub.problem.name }}
                                 </a>
                             </td>
                             <td>
-                                <span class="badge bg-secondary">{{ sub.language }}</span>
+                                <span class="badge border text-body fw-normal">{{ sub.language }}</span>
                             </td>
                             <td>
                                 {% if sub.verdict == 'Accepted' or sub.verdict == 'Passou' %}
-                                    <span class="badge bg-success">Sucesso</span>
-                                {% elif sub.verdict == 'Wrong Answer' %}
-                                    <span class="badge bg-danger">Erro</span>
+                                    <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 rounded-pill px-3">
+                                        ✅ Aceito
+                                    </span>
+                                {% elif sub.verdict == 'Wrong Answer' or sub.verdict == 'Erro' %}
+                                    <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 rounded-pill px-3">
+                                        ❌ Erro
+                                    </span>
                                 {% else %}
-                                    <span class="badge bg-warning text-dark">{{ sub.result or 'Pendente' }}</span>
+                                    <span class="badge bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25 rounded-pill px-3">
+                                        ⏳ {{ sub.verdict or 'Pendente' }}
+                                    </span>
                                 {% endif %}
                             </td>
                         </tr>
@@ -115,14 +146,12 @@
                 </table>
             </div>
             {% else %}
-                <div class="alert alert-info">
-                    Nenhuma submissão realizada ainda.
+                <div class="text-center py-5 text-muted">
+                    <div class="fs-1 mb-2">💤</div>
+                    <p>O sistema está tranquilo. Nenhuma submissão recente.</p>
                 </div>
             {% endif %}
             
-            <div class="mt-3 text-end">
-                <a href="{{ url_for('ranking.get_ranking_controller') }}" class="btn btn-link">Ver Ranking Global &rarr;</a>
-            </div>
         </div>
     </div>
 </div>
