@@ -1,124 +1,123 @@
-{% extends "base.html" %}
-{% block title %}Criar Problema{% endblock %}
-
-{% block content %}
+{% extends "base.html" %} {% block title %}Criar Problema{% endblock %} {% block
+content %}
 
 <div class="row justify-content-center">
-    <div class="col-lg-8">
+  <div class="col-lg-8">
+    <div class="surface p-5">
+      <h1 class="fw-bold mb-4 text-center">Criar Novo Problema</h1>
 
-        <div class="surface p-5">
-
-            <h1 class="fw-bold mb-4 text-center">
-                Criar Novo Problema
-            </h1>
-
-            <form method="POST">
-
-                <div class="mb-4">
-                    <label class="form-label fw-semibold">
-                        Nome do Problema
-                    </label>
-                    <input
-                        type="text"
-                        name="name"
-                        class="form-control form-control-lg"
-                        placeholder="Ex: Soma de Dois Números"
-                        required>
-                </div>
-
-                <div class="mb-4">
-                    <label class="form-label fw-semibold">
-                        Descrição
-                    </label>
-                    <textarea
-                        name="description"
-                        class="form-control"
-                        rows="4"
-                        placeholder="Descreva o problema de forma clara"
-                        required></textarea>
-                </div>
-
-                <div class="mb-4">
-                    <label class="form-label fw-semibold">
-                        Descrição da Entrada
-                    </label>
-                    <textarea
-                        name="input_description"
-                        class="form-control"
-                        rows="3"
-                        placeholder="Descreva o formato da entrada"
-                        required></textarea>
-                </div>
-
-                <div class="mb-4">
-                    <label class="form-label fw-semibold">
-                        Descrição da Saída
-                    </label>
-                    <textarea
-                        name="output_description"
-                        class="form-control"
-                        rows="3"
-                        placeholder="Descreva o formato da saída"
-                        required></textarea>
-                </div>
-
-                <div class="mb-4">
-                    <label class="form-label fw-semibold">
-                        Restrições
-                    </label>
-                    <textarea
-                        name="constraints"
-                        class="form-control"
-                        rows="3"
-                        placeholder="Ex: 1 ≤ N ≤ 10⁵"
-                        required></textarea>
-                </div>
-
-                <hr class="my-4">
-
-                <h4 class="fw-bold mb-3 text-warning">
-                    Primeiro Caso de Teste (Obrigatório)
-                </h4>
-
-                <div class="mb-4">
-                    <label class="form-label fw-semibold">
-                        Entrada do Caso de Teste
-                    </label>
-                    <textarea
-                        name="input_data"
-                        class="form-control"
-                        rows="4"
-                        placeholder="Entrada que será passada ao programa"
-                        required></textarea>
-                </div>
-
-                <div class="mb-4">
-                    <label class="form-label fw-semibold">
-                        Saída Esperada
-                    </label>
-                    <textarea
-                        name="expected_output"
-                        class="form-control"
-                        rows="4"
-                        placeholder="Saída esperada para a entrada acima"
-                        required></textarea>
-                </div>
-
-                <div class="d-flex justify-content-end gap-2">
-                    <a href="{{ url_for('problem.list_problems_controller') }}"
-                       class="btn btn-outline-secondary">
-                        Cancelar
-                    </a>
-
-                    <button type="submit" class="btn btn-primary px-4">
-                        Criar Problema
-                    </button>
-                </div>
-
-            </form>
-
+      <form method="POST">
+        <div class="mb-4">
+          <label class="form-label fw-semibold"> Nome do Problema </label>
+          <input
+            type="text"
+            name="name"
+            class="form-control form-control-lg"
+            placeholder="Ex: Soma de Dois Números"
+            required
+          />
         </div>
+
+        <div class="col-md-4">
+          <label class="form-label fw-bold text-muted small">DIFICULDADE</label>
+          <select name="difficulty" class="form-select form-select-lg" required>
+            <option value="Iniciante">Iniciante (10xp)</option>
+            <option value="Fácil">Fácil (30xp)</option>
+            <option value="Médio">Médio (50xp)</option>
+            <option value="Difícil">Difícil (100xp)</option>
+            <option value="Lendário">Lendário (200xp)</option>
+          </select>
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label fw-semibold"> Descrição </label>
+          <textarea
+            name="description"
+            class="form-control"
+            rows="4"
+            placeholder="Descreva o problema de forma clara"
+            required
+          ></textarea>
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label fw-semibold"> Descrição da Entrada </label>
+          <textarea
+            name="input_description"
+            class="form-control"
+            rows="3"
+            placeholder="Descreva o formato da entrada"
+            required
+          ></textarea>
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label fw-semibold"> Descrição da Saída </label>
+          <textarea
+            name="output_description"
+            class="form-control"
+            rows="3"
+            placeholder="Descreva o formato da saída"
+            required
+          ></textarea>
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label fw-semibold"> Restrições </label>
+          <textarea
+            name="constraints"
+            class="form-control"
+            rows="3"
+            placeholder="Ex: 1 ≤ N ≤ 10⁵"
+            required
+          ></textarea>
+        </div>
+
+        <hr class="my-4" />
+
+        <h4 class="fw-bold mb-3 text-warning">
+          Primeiro Caso de Teste (Obrigatório)
+        </h4>
+
+        <div class="mb-4">
+          <label class="form-label fw-semibold">
+            Entrada do Caso de Teste
+          </label>
+          <textarea
+            name="input_data"
+            class="form-control"
+            rows="4"
+            placeholder="Entrada que será passada ao programa"
+            required
+          ></textarea>
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label fw-semibold"> Saída Esperada </label>
+          <textarea
+            name="expected_output"
+            class="form-control"
+            rows="4"
+            placeholder="Saída esperada para a entrada acima"
+            required
+          ></textarea>
+        </div>
+
+        <div class="d-flex justify-content-end gap-2">
+          <a
+            href="{{ url_for('problem.list_problems_controller') }}"
+            class="btn btn-outline-secondary"
+          >
+            Cancelar
+          </a>
+
+          <button type="submit" class="btn btn-primary px-4">
+            Criar Problema
+          </button>
+        </div>
+      </form>
     </div>
+  </div>
 </div>
 
 {% endblock %}

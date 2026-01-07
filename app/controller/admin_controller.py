@@ -37,14 +37,13 @@ def new_problem():
     
     if request.method == 'POST':
 
-        #aqui serve pra capturar dados do formulário (HTML)
         name = request.form.get('name')
         description = request.form.get('description')
         input_desc = request.form.get('input_description')
         output_desc = request.form.get('output_description')
         constraints = request.form.get('constraints')
+        difficulty = request.form.get('difficulty')
 
-        # Dados do caso de teste
         input_data = request.form.get('input_data')
         expected_output = request.form.get('expected_output')
 
@@ -54,7 +53,8 @@ def new_problem():
                 description=description,
                 input_description=input_desc,
                 output_description=output_desc,
-                constraints=constraints
+                constraints=constraints,
+                difficulty=difficulty
             )
 
             db.session.add(new_prob)

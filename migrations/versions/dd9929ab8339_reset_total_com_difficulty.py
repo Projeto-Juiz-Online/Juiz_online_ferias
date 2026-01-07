@@ -1,8 +1,8 @@
-"""corrigindo tipo admin
+"""Reset total com difficulty
 
-Revision ID: 1c541bb88318
+Revision ID: dd9929ab8339
 Revises: 
-Create Date: 2026-01-05 15:39:10.405090
+Create Date: 2026-01-07 16:38:09.002314
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '1c541bb88318'
+revision = 'dd9929ab8339'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -25,6 +25,7 @@ def upgrade():
     sa.Column('input_description', sa.Text(), nullable=False),
     sa.Column('output_description', sa.Text(), nullable=False),
     sa.Column('constraints', sa.Text(), nullable=False),
+    sa.Column('difficulty', sa.String(length=50), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('users',

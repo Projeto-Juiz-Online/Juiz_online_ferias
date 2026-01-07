@@ -424,39 +424,98 @@ button:active #theme-icon {
 }
 
 /* =========================================
-   9. RANKING
+   10. BADGES DE DIFICULDADE
    ========================================= */
 
-/* Medalha (Círculo ou Ícone) */
-.rank-medal {
-    font-size: 1.5rem;
-    line-height: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.badge-diff {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    border: 1px solid transparent;
 }
 
-/* Efeito de brilho nas linhas do Top 3 */
-.row-gold {
-    background: linear-gradient(90deg, rgba(255, 215, 0, 0.05) 0%, transparent 100%);
-    border-left: 4px solid #ffd700;
+/* Iniciante / Fácil (Verdes/Azuis) */
+.diff-iniciante {
+    background-color: rgba(74, 222, 128, 0.15);
+    color: #4ade80;
+    border-color: rgba(74, 222, 128, 0.3);
 }
 
-.row-silver {
-    background: linear-gradient(90deg, rgba(192, 192, 192, 0.05) 0%, transparent 100%);
-    border-left: 4px solid #c0c0c0;
+.diff-facil {
+    background-color: rgba(56, 189, 248, 0.15);
+    color: #38bdf8;
+    border-color: rgba(56, 189, 248, 0.3);
 }
 
-.row-bronze {
-    background: linear-gradient(90deg, rgba(205, 127, 50, 0.05) 0%, transparent 100%);
-    border-left: 4px solid #cd7f32;
+/* Médio (Amarelo/Laranja) */
+.diff-medio {
+    background-color: rgba(251, 191, 36, 0.15);
+    color: #fbbf24;
+    border-color: rgba(251, 191, 36, 0.3);
 }
 
-/* Ajuste para remover a borda padrão nas linhas premiadas se necessário */
-.row-gold td, .row-silver td, .row-bronze td {
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+/* Difícil (Vermelho) */
+.diff-dificil {
+    background-color: rgba(248, 113, 113, 0.15);
+    color: #f87171;
+    border-color: rgba(248, 113, 113, 0.3);
 }
 
-/* Avatar Dourado para o 1º lugar é controlado inline no HTML, 
-   mas você pode criar classes específicas se preferir */
+/* Lendário (Roxo Épico) */
+.diff-lendario {
+    background-color: rgba(192, 132, 252, 0.15);
+    color: #c084fc;
+    border-color: rgba(192, 132, 252, 0.3);
+    box-shadow: 0 0 10px rgba(192, 132, 252, 0.1); /* Brilho sutil */
+}
+
+/* =========================================
+   11. ESTILOS ESPECÍFICOS PARA OS PROBLEMAS    
+   ========================================= */
+
+/* Link de Voltar */
+.back-link {
+    color: var(--text-muted);
+    transition: transform 0.2s, color 0.2s;
+}
+
+.back-link:hover {
+    color: var(--primary-color);
+    transform: translateX(-5px); /* Efeito sutil de mover pra esquerda */
+}
+
+/* Botão "Fantasma" (Fundo transparente, fica colorido no hover) */
+.btn-ghost {
+    background-color: transparent;
+    border: 1px solid transparent;
+    color: var(--text-muted);
+}
+
+.btn-ghost:hover {
+    background-color: var(--bg-body);
+    color: var(--text-body);
+}
+
+/* Cor roxa para o texto Lendário inativo */
+.text-purple {
+    color: #c084fc !important;
+}
+
+/* =========================================
+   12. CORREÇÃO DA BARRA DE PESQUISA
+   ========================================= */
+
+.input-group-text {
+    background-color: var(--bg-input) !important; 
+    border-color: var(--border-color);
+    color: var(--text-muted);
+}
+
+.input-group .form-control {
+    background-color: var(--bg-input);
+    border-color: var(--border-color);
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: var(--primary-color);
+}

@@ -4,6 +4,7 @@ from app.service.test_case_service import create_test_case
 from app.service.submission_service import list_submissions_by_problem
 from flask_login import login_required, current_user
 from app.utils.decorators import admin_required
+from app.models.problem import Problem
 
 problem_bp = Blueprint('problem', __name__)
 
@@ -13,15 +14,20 @@ problem_bp = Blueprint('problem', __name__)
 
 @problem_bp.route("/problems", methods=["GET"])
 def list_problems_controller():
+    search = request.args.get("search")
+    difficulty = request.args.get("difficulty")
 
-    query = request.args.get("search")
+    query = Problem.query
 
-    if query:
-        problems = search_problems_by_name(query)
-    else:
-        problems = list_problems()
+    if search:
+        query = query.filter(Problem.name.ilike(f"%{search}%"))
+    
+    if difficulty and difficulty != 'Todos':
+        query = query.filter_by(difficulty=difficulty)
 
-    return render_template("list_problems.html", problems=problems)
+    problems = query.all()
+
+    return render_template("list_problems.html", problems=problems, current_diff=difficulty)
 
 @problem_bp.route("/problems/<int:id>/delete", methods=["POST"])
 @login_required  

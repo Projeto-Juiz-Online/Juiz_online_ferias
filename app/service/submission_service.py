@@ -7,6 +7,15 @@ from app.service.runner.python_runner import run_python
 from app.service.runner.c_runner import run_c
 from app.models.test_case import TestCase
 
+# Tabela de Pontos Fixa
+POINTS_TABLE = {
+    "Iniciante": 10,
+    "Fácil": 30,
+    "Médio": 50,
+    "Difícil": 100,
+    "Lendário": 200
+}
+
 def create_submission(language,user_id,problem_id,code):
 
     problem = Problem.query.get(problem_id)
@@ -56,6 +65,29 @@ def create_submission(language,user_id,problem_id,code):
         submission.status = "WA"
     else:
         submission.status = "AC"
+
+    #Lógica de pontuação
+
+    # Verifica se o usuário já havia resolvido o problema antes
+    already_solved = Submission.query.filter(
+        Submission.user_id == user_id,
+        Submission.problem_id == problem_id,
+        Submission.status == 'AC',
+        Submission.id != submission.id
+    ).count() 
+
+    if already_solved == 0:
+        user = User.query.get(user_id)
+        # Busca a dificuldade do problema, caso não exista, define como "Iniciante" para evitar erros
+        difficulty = getattr(problem, 'difficulty', 'Iniciante')
+        points_to_add = POINTS_TABLE.get(difficulty, 10)  # Padrão para "Iniciante" se dificuldade não for encontrada
+
+        #Garante que user.points não seja None e evita erros ao somar
+        if user.points is None:
+            user.points = 0
+
+        user.points += points_to_add
+        print(f"Adicionando {points_to_add} pontos ao usuário {user.username} por resolver o problema {problem.name}")
 
     submission.total_tests = total
     submission.passed_tests = passed

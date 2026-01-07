@@ -1,32 +1,82 @@
 {% extends "base.html" %}
-{% block title %}Problemas{% endblock %}
+{% block title %}Problemas | Juiz Online{% endblock %}
 
 {% block content %}
 
+<div class="mb-3">
+    <a href="{{ url_for('home') }}" 
+       class="text-decoration-none d-inline-flex align-items-center gap-2 back-link">
+        <span class="fs-5">←</span> 
+        <span class="fw-bold small text-uppercase">Voltar para Início</span>
+    </a>
+</div>
+
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="fw-bold mb-0">Problemas</h1>
+    <div>
+        <h1 class="fw-bold mb-0">Problemas</h1>
+        <p class="text-muted small mb-0">Treine suas habilidades de programação.</p>
+    </div>
 
     {% if current_user.is_authenticated and current_user.is_admin %}
-        <a href="{{ url_for('admin.new_problem') }}"
-           class="btn btn-primary">
+        <a href="{{ url_for('admin.new_problem') }}" class="btn btn-primary fw-bold shadow-sm">
             + Novo Problema
         </a>
     {% endif %}
 </div>
 
-<div class="surface p-4 mb-4">
-    <form method="GET" class="row g-2">
-        <div class="col-md-10">
-            <input
-                type="text"
-                name="search"
-                value="{{ request.args.get('search', '') }}"
-                class="form-control form-control-lg"
-                placeholder="Buscar problema pelo nome">
-        </div>
+<div class="surface p-2 mb-4 shadow-sm border-0 d-flex gap-2 overflow-auto" style="border-radius: 50px;">
+    
+    <a href="{{ url_for('problem.list_problems_controller') }}" 
+       class="btn rounded-pill fw-bold px-4 {% if not current_diff or current_diff == 'Todos' %}btn-dark{% else %}btn-ghost{% endif %}">
+       Todos
+    </a>
 
+    <a href="{{ url_for('problem.list_problems_controller', difficulty='Iniciante') }}" 
+       class="btn rounded-pill fw-bold px-3 {% if current_diff == 'Iniciante' %}diff-iniciante border-0{% else %}btn-ghost text-success{% endif %}">
+       Iniciante
+    </a>
+
+    <a href="{{ url_for('problem.list_problems_controller', difficulty='Fácil') }}" 
+       class="btn rounded-pill fw-bold px-3 {% if current_diff == 'Fácil' %}diff-facil border-0{% else %}btn-ghost text-info{% endif %}">
+       Fácil
+    </a>
+
+    <a href="{{ url_for('problem.list_problems_controller', difficulty='Médio') }}" 
+       class="btn rounded-pill fw-bold px-3 {% if current_diff == 'Médio' %}diff-medio border-0{% else %}btn-ghost text-warning{% endif %}">
+       Médio
+    </a>
+
+    <a href="{{ url_for('problem.list_problems_controller', difficulty='Difícil') }}" 
+       class="btn rounded-pill fw-bold px-3 {% if current_diff == 'Difícil' %}diff-dificil border-0{% else %}btn-ghost text-danger{% endif %}">
+       Difícil
+    </a>
+
+    <a href="{{ url_for('problem.list_problems_controller', difficulty='Lendário') }}" 
+       class="btn rounded-pill fw-bold px-3 {% if current_diff == 'Lendário' %}diff-lendario border-0{% else %}btn-ghost text-purple{% endif %}">
+       Lendário
+    </a>
+</div>
+
+<div class="surface p-4 mb-4 shadow-sm border-0">
+    <form method="GET" class="row g-3">
+        {% if current_diff %}
+        <input type="hidden" name="difficulty" value="{{ current_diff }}">
+        {% endif %}
+
+        <div class="col-md-10">
+            <div class="input-group">
+                <span class="input-group-text bg-transparent border-end-0 text-muted">🔍</span>
+                <input
+                    type="text"
+                    name="search"
+                    value="{{ request.args.get('search', '') }}"
+                    class="form-control form-control-lg border-start-0 ps-0"
+                    placeholder="Buscar problema pelo nome..."
+                    style="box-shadow: none;">
+            </div>
+        </div>
         <div class="col-md-2">
-            <button class="btn btn-primary btn-lg w-100">
+            <button class="btn btn-primary btn-lg w-100 fw-bold">
                 Buscar
             </button>
         </div>
@@ -36,49 +86,61 @@
 <div class="row g-4">
     {% for problem in problems %}
         <div class="col-md-6 col-lg-4">
-            <div class="surface p-4 h-100 d-flex flex-column justify-content-between position-relative">
+            <div class="surface p-4 h-100 d-flex flex-column justify-content-between position-relative shadow-sm transition-hover" 
+                 style="border-radius: 12px; transition: transform 0.2s;">
 
                 {% if current_user.is_authenticated and current_user.is_admin %}
                 <form method="POST"
                       action="{{ url_for('problem.delete_problem_controller', id=problem.id) }}"
                       class="position-absolute top-0 end-0 m-2"
+                      style="z-index: 10;"
                       onsubmit="return confirm('Tem certeza que deseja deletar este problema?');">
-                    <button type="submit" class="btn btn-sm btn-outline-danger border-0" title="Deletar Problema">
+                    <button type="submit" class="btn btn-sm btn-outline-danger border-0 p-2" title="Deletar Problema">
                         🗑️
                     </button>
                 </form>
                 {% endif %}
 
-                <div>
-                    <h5 class="fw-bold mb-2">
-                        {{ problem.name }}
-                    </h5>
-                    <p class="text-muted small">
-                        {{ problem.description[:100] }}...
-                    </p>
+                <div class="mb-3">
+                    <div class="d-flex flex-column gap-2">
+                        
+                        {% set diff = problem.difficulty %}
+                        {% set diff_class = 'diff-iniciante' %}
+                        
+                        {% if diff == 'Fácil' %} {% set diff_class = 'diff-facil' %}
+                        {% elif diff == 'Médio' %} {% set diff_class = 'diff-medio' %}
+                        {% elif diff == 'Difícil' %} {% set diff_class = 'diff-dificil' %}
+                        {% elif diff == 'Lendário' %} {% set diff_class = 'diff-lendario' %}
+                        {% endif %}
+
+                        <div class="d-flex align-items-center">
+                            <span class="badge badge-diff {{ diff_class }} rounded-pill" style="font-size: 0.7rem;">
+                                {{ problem.difficulty }}
+                            </span>
+                        </div>
+
+                        <h5 class="fw-bold mb-0 text-truncate pe-4" title="{{ problem.name }}">
+                            {{ problem.name }}
+                        </h5>
+                        
+                        <p class="text-muted small mt-2 mb-0" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                            {{ problem.description }}
+                        </p>
+                    </div>
                 </div>
 
                <div class="mt-3">
                     <a href="{{ url_for('problem.get_problem_controller', id=problem.id) }}"
-                       class="btn btn-primary w-100 mb-2">
-                        Ver problema
+                       class="btn btn-primary w-100 mb-2 btn-outline-adaptive">
+                        Resolver Desafio 🚀
                     </a>
 
                     {% if current_user.is_authenticated and current_user.is_admin %}
                         <div class="btn-group w-100" role="group">
-                            
                             <a href="{{ url_for('test_case.create_test_case_controller', problem_id=problem.id) }}"
-                               class="btn btn-sm btn-outline-success" 
-                               title="Adicionar Caso de Teste">
-                                Criar Casos de Teste
-                            </a>
-
+                               class="btn btn-sm btn-outline-success" title="Adicionar Caso de Teste">➕ Add Teste</a>
                             <a href="{{ url_for('test_case.list_test_cases_controller', problem_id=problem.id) }}"
-                               class="btn btn-sm btn-outline-warning"
-                               title="Ver Casos de Teste">
-                                Ver Casos de Teste
-                            </a>
-
+                               class="btn btn-sm btn-outline-warning" title="Ver Casos de Teste">👁️ Ver Testes</a>
                         </div>
                     {% endif %}
                 </div>
@@ -88,12 +150,11 @@
 
     {% else %}
         <div class="col-12">
-            <div class="alert alert-info text-center p-5 no_found">
-                <h4>Nenhum problema encontrado 😕</h4>
-                {% if current_user.is_authenticated and current_user.is_admin %}
-                    <p>Que tal criar o primeiro desafio?</p>
-                    <a href="{{ url_for('admin.new_problem') }}" class="btn btn-primary">Criar Problema</a>
-                {% endif %}
+            <div class="surface p-5 text-center shadow-sm">
+                <div class="fs-1 mb-3">🔍</div>
+                <h4 class="fw-bold">Nenhum problema encontrado</h4>
+                <p class="text-muted">Não achamos problemas com esse filtro.</p>
+                <a href="{{ url_for('problem.list_problems_controller') }}" class="btn btn-outline-secondary mt-2">Limpar Filtros</a>
             </div>
         </div>
     {% endfor %}

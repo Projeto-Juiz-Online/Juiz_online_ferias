@@ -6,13 +6,48 @@
 <div class="row justify-content-center">
     <div class="col-lg-10">
 
+        <div class="mb-3">
+            <a href="{{ url_for('problem.list_problems_controller') }}" 
+               class="text-decoration-none d-inline-flex align-items-center gap-2 back-link">
+                <span class="fs-5">←</span> 
+                <span class="fw-bold small text-uppercase">Voltar para Problemas</span>
+            </a>
+        </div>
+
         <div class="surface p-5 mb-4 shadow-sm border-0 position-relative">
             
             <div class="d-flex justify-content-between align-items-start mb-3">
                 <div>
-                    <span class="badge bg-secondary mb-2">ID: {{ problem.id }}</span>
+                    {% set diff = problem.difficulty %}
+                    {% set diff_class = 'diff-iniciante' %}
+                    {% set xp_val = '10 XP' %}
+                    
+                    {% if diff == 'Fácil' %} 
+                        {% set diff_class = 'diff-facil' %}
+                        {% set xp_val = '30 XP' %}
+                    {% elif diff == 'Médio' %} 
+                        {% set diff_class = 'diff-medio' %}
+                        {% set xp_val = '50 XP' %}
+                    {% elif diff == 'Difícil' %} 
+                        {% set diff_class = 'diff-dificil' %}
+                        {% set xp_val = '100 XP' %}
+                    {% elif diff == 'Lendário' %} 
+                        {% set diff_class = 'diff-lendario' %}
+                        {% set xp_val = '200 XP' %}
+                    {% endif %}
+
+                    <div class="d-flex gap-2 mb-2">
+                        <span class="badge badge-diff {{ diff_class }} rounded-pill">
+                            {{ problem.difficulty }}
+                        </span>
+                        <span class="badge bg-dark border border-secondary text-warning font-monospace">
+                            ⚡ {{ xp_val }}
+                        </span>
+                    </div>
+
                     <h1 class="fw-bold mb-0 text-primary">{{ problem.name }}</h1>
                 </div>
+                
                 <a href="{{ url_for('submission.create_submission_controller', problem_id=problem.id) }}" 
                    class="btn btn-primary px-4 py-2 fw-bold shadow-sm">
                     🚀 Enviar Solução
@@ -22,37 +57,38 @@
             <hr class="opacity-25 my-4">
 
             <div class="problem-description mb-5">
-                <p class="fs-5 lh-base problem-text">{{ problem.description }}</p>
+                <p class="fs-5 lh-base" style="white-space: pre-line; color: var(--text-body);">{{ problem.description }}</p>
             </div>
 
             <div class="row g-4 mb-4">
                 <div class="col-md-6">
-                    <div class="card h-100 border-0 card-input">
+                    <div class="card h-100 border-0" style="background-color: var(--bg-body);">
                         <div class="card-header bg-transparent border-0 fw-bold text-uppercase text-muted small">
                             📥 Entrada
                         </div>
                         <div class="card-body font-monospace p-3 pt-0">
-                            <pre class="mb-0 pre-wrap">{{ problem.input_description }}</pre>
+                            <pre class="mb-0" style="white-space: pre-wrap; color: var(--text-body);">{{ problem.input_description }}</pre>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="card h-100 border-0 card-output">
+                    <div class="card h-100 border-0" style="background-color: var(--bg-body);">
                         <div class="card-header bg-transparent border-0 fw-bold text-uppercase text-muted small">
                             📤 Saída
                         </div>
                         <div class="card-body font-monospace p-3 pt-0">
-                            <pre class="mb-0 pre-wrap">{{ problem.output_description }}</pre>
+                            <pre class="mb-0" style="white-space: pre-wrap; color: var(--text-body);">{{ problem.output_description }}</pre>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="alert alert-light border d-flex align-items-center" role="alert">
+            <div class="p-3 rounded border d-flex align-items-center" 
+                 style="background-color: rgba(255, 255, 255, 0.03); border-color: var(--border-color) !important;">
                 <span class="fs-4 me-3">⚠️</span>
                 <div>
                     <strong class="d-block text-uppercase small text-muted">Restrições</strong>
-                    <span class="font-monospace">{{ problem.constraints }}</span>
+                    <span class="font-monospace" style="color: var(--text-body);">{{ problem.constraints }}</span>
                 </div>
             </div>
 
@@ -80,17 +116,17 @@
                                 <span class="font-monospace text-muted">#{{ sub.id }}</span>
                             </td>
                             <td>
-                                {% if sub.status == 'Accepted' or sub.status == 'Passou' %}
+                                {% if sub.status == 'Accepted' or sub.status == 'Passou' or sub.status == 'AC' %}
                                     <span class="badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill">
-                                        ✅ {{ sub.status }}
+                                        ✅ Aceito
                                     </span>
-                                {% elif sub.status == 'Wrong Answer' or sub.status == 'Erro' %}
+                                {% elif sub.status == 'Wrong Answer' or sub.status == 'Erro' or sub.status == 'WA' %}
                                     <span class="badge bg-danger bg-opacity-10 text-danger px-3 py-2 rounded-pill">
-                                        ❌ {{ sub.status }}
+                                        ❌ Erro
                                     </span>
                                 {% elif sub.status == 'RUNNING' or sub.status == 'Pending' %}
                                     <span class="badge bg-warning bg-opacity-10 text-warning px-3 py-2 rounded-pill">
-                                        ⏳ {{ sub.status }}
+                                        ⏳ Processando
                                     </span>
                                 {% else %}
                                     <span class="badge bg-secondary bg-opacity-10 text-secondary px-3 py-2 rounded-pill">
@@ -117,9 +153,9 @@
             {% else %}
             <div class="text-center py-5 text-muted">
                 <div class="fs-1 mb-2">📝</div>
-                <p>Nenhuma submissão enviada ainda.</p>
+                <p>Você ainda não enviou nenhuma tentativa para este problema.</p>
                 <a href="{{ url_for('submission.create_submission_controller', problem_id=problem.id) }}" class="btn btn-outline-primary btn-sm">
-                    Ser o primeiro a resolver
+                    Fazer sua primeira tentativa
                 </a>
             </div>
             {% endif %}
