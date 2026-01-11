@@ -1,3 +1,9 @@
+{% extends "base.html" %}
+
+{% block title %}Ranking | Juiz Online{% endblock %}
+
+{% block content %}
+
 <div class="surface p-4">
 
     {# Podium shown only when there are at least 3 users #}
@@ -7,20 +13,20 @@
         {% set second = users[1] %}
         {% set third = users[2] %}
 
-        <div class="text-center" style="width:130px;">
-            <div class="bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center mx-auto" style="width:84px;height:84px;font-size:1.25rem;">2</div>
+        <div class="text-center podium-col podium-second">
+            <div class="medal second bg-secondary text-white d-flex align-items-center justify-content-center mx-auto">2</div>
             <div class="mt-2 text-muted small">{{ second.username }}</div>
             <div class="fw-bold text-warning">{{ second.points or 0 }}</div>
         </div>
 
-        <div class="text-center" style="width:150px;">
-            <div class="bg-warning text-dark rounded-circle d-flex align-items-center justify-content-center mx-auto" style="width:108px;height:108px;font-size:1.5rem;">1</div>
+        <div class="text-center podium-col podium-first">
+            <div class="medal first bg-warning text-dark d-flex align-items-center justify-content-center mx-auto">1</div>
             <div class="mt-2 text-muted small">{{ first.username }}</div>
             <div class="fw-bold text-warning">{{ first.points or 0 }}</div>
         </div>
 
-        <div class="text-center" style="width:130px;">
-            <div class="bg-light text-dark rounded-circle d-flex align-items-center justify-content-center mx-auto" style="width:84px;height:84px;font-size:1.25rem;">3</div>
+        <div class="text-center podium-col podium-third">
+            <div class="medal third bg-light text-dark d-flex align-items-center justify-content-center mx-auto">3</div>
             <div class="mt-2 text-muted small">{{ third.username }}</div>
             <div class="fw-bold text-warning">{{ third.points or 0 }}</div>
         </div>
@@ -28,7 +34,7 @@
     {% endif %}
 
     <div class="table-responsive">
-        <table class="table table-dark table-hover align-middle mb-0">
+        <table class="table table-dashboard table-hover align-middle mb-0">
             <thead>
                 <tr class="text-secondary">
                     <th>#</th>
@@ -58,3 +64,4 @@
     </div>
 
 </div>
+{% endblock %}

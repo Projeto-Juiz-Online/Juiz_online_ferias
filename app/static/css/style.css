@@ -398,6 +398,41 @@ button:active #theme-icon {
     background-color: rgba(255, 255, 255, 0.03); 
 }
 
+/* Podium and medal visual tweaks for ranking page */
+.podium {
+    gap: 1rem;
+}
+.podium-col {
+    width: 130px;
+}
+.podium-col.podium-first {
+    width: 150px;
+}
+.medal {
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.25rem;
+    border: 1px solid var(--border-color);
+}
+.medal.first {
+    width: 108px;
+    height: 108px;
+    font-size: 1.5rem;
+}
+
+/* small responsive tweak */
+@media (max-width: 576px) {
+    .podium { gap: 0.5rem; }
+    .podium-col { width: 100px; }
+    .podium-col.podium-first { width: 120px; }
+    .medal, .medal.first { width: 64px; height: 64px; font-size: 1rem; }
+}
+
 .avatar-small {
     width: 32px;
     height: 32px;
