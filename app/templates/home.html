@@ -42,8 +42,8 @@
 <div class="row g-4">
     <div class="col-md-4">
         <div class="surface p-4 text-center h-100">
-            <h3 class="fw-bold text-success">0</h3>
-            <p class="text-muted mb-0">Problemas Resolvidos</p>
+            <h3 class="fw-bold text-success">{{ current_user.points or 0 }}</h3>
+            <p class="text-muted mb-0">Seus Pontos</p>
         </div>
     </div>
     <div class="col-md-4">
@@ -56,8 +56,8 @@
     </div>
     <div class="col-md-4">
         <div class="surface p-4 text-center h-100">
-            <h3 class="fw-bold text-info">Python</h3>
-            <p class="text-muted mb-0">Linguagem Favorita</p>
+            <h3 class="fw-bold text-info">{{ current_user.submissions | length }}</h3>
+            <p class="text-muted mb-0">Submissões</p>
         </div>
     </div>
 </div>
