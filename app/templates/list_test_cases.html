@@ -71,4 +71,11 @@
     </div>
 {% endif %}
 
+<div class="d-flex gap-2 mt-4">
+    <a href="{{ url_for('test_case.create_test_case_controller', problem_id=problem.id) }}"
+       class="btn btn-primary">
+        + Novo caso de teste
+    </a>
+</div>
+
 {% endblock %}
