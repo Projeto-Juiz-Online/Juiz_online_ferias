@@ -1,8 +1,8 @@
-"""Reset total com difficulty
+"""empty message
 
-Revision ID: dd9929ab8339
+Revision ID: 12954c2e4e01
 Revises: 
-Create Date: 2026-01-07 16:38:09.002314
+Create Date: 2026-01-09 22:19:41.004078
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'dd9929ab8339'
+revision = '12954c2e4e01'
 down_revision = None
 branch_labels = None
 depends_on = None

@@ -20,20 +20,20 @@
                 <div>
                     {% set diff = problem.difficulty %}
                     {% set diff_class = 'diff-iniciante' %}
-                    {% set xp_val = '10 XP' %}
+                    {% set xp_val = '10 P' %}
                     
                     {% if diff == 'Fácil' %} 
                         {% set diff_class = 'diff-facil' %}
-                        {% set xp_val = '30 XP' %}
+                        {% set xp_val = '30 P' %}
                     {% elif diff == 'Médio' %} 
                         {% set diff_class = 'diff-medio' %}
-                        {% set xp_val = '50 XP' %}
+                        {% set xp_val = '50 P' %}
                     {% elif diff == 'Difícil' %} 
                         {% set diff_class = 'diff-dificil' %}
-                        {% set xp_val = '100 XP' %}
+                        {% set xp_val = '100 P' %}
                     {% elif diff == 'Lendário' %} 
                         {% set diff_class = 'diff-lendario' %}
-                        {% set xp_val = '200 XP' %}
+                        {% set xp_val = '200 P' %}
                     {% endif %}
 
                     <div class="d-flex gap-2 mb-2">

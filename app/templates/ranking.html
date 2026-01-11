@@ -1,27 +1,60 @@
-<table class="table table-dark table-hover align-middle mb-0">
-    <thead>
-        <tr class="text-secondary">
-            <th>#</th>
-            <th>Usuário</th>
-            <th class="text-end">Pontos</th>
-        </tr>
-    </thead>
+<div class="surface p-4">
 
-    <tbody>
-        {% for user in users %}
-        <tr>
-            <td class="fw-bold">{{ loop.index }}</td>
-            <td>{{ user.username }}</td>
-            <td class="text-end fw-bold text-warning">
-                {{ user.points or 0 }}
-            </td>
-        </tr>
-        {% else %}
-        <tr>
-            <td colspan="3" class="text-center text-muted py-4">
-                Nenhum usuário pontuado ainda
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+    {# Podium shown only when there are at least 3 users #}
+    {% if users | length >= 3 %}
+    <div class="d-flex justify-content-center mb-4 gap-4 align-items-end podium">
+        {% set first = users[0] %}
+        {% set second = users[1] %}
+        {% set third = users[2] %}
+
+        <div class="text-center" style="width:130px;">
+            <div class="bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center mx-auto" style="width:84px;height:84px;font-size:1.25rem;">2</div>
+            <div class="mt-2 text-muted small">{{ second.username }}</div>
+            <div class="fw-bold text-warning">{{ second.points or 0 }}</div>
+        </div>
+
+        <div class="text-center" style="width:150px;">
+            <div class="bg-warning text-dark rounded-circle d-flex align-items-center justify-content-center mx-auto" style="width:108px;height:108px;font-size:1.5rem;">1</div>
+            <div class="mt-2 text-muted small">{{ first.username }}</div>
+            <div class="fw-bold text-warning">{{ first.points or 0 }}</div>
+        </div>
+
+        <div class="text-center" style="width:130px;">
+            <div class="bg-light text-dark rounded-circle d-flex align-items-center justify-content-center mx-auto" style="width:84px;height:84px;font-size:1.25rem;">3</div>
+            <div class="mt-2 text-muted small">{{ third.username }}</div>
+            <div class="fw-bold text-warning">{{ third.points or 0 }}</div>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="table-responsive">
+        <table class="table table-dark table-hover align-middle mb-0">
+            <thead>
+                <tr class="text-secondary">
+                    <th>#</th>
+                    <th>Usuário</th>
+                    <th class="text-end">Pontos</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td class="fw-bold">{{ loop.index }}</td>
+                    <td>{{ user.username }}</td>
+                    <td class="text-end fw-bold text-warning">
+                        {{ user.points or 0 }}
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="3" class="text-center text-muted py-4">
+                        Nenhum usuário pontuado ainda
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
