@@ -1,4 +1,4 @@
-FROM g++:12
+FROM gcc:12
 
 WORKDIR /app
 

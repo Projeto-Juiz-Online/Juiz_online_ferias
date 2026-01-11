@@ -5,6 +5,7 @@ from app.models.user import User
 from app.service.judge import judge
 from app.service.runner.python_runner import run_python
 from app.service.runner.c_runner import run_c
+from app.service.runner.cpp_runner import run_cpp
 from app.models.test_case import TestCase
 
 # Tabela de Pontos Fixa
@@ -44,6 +45,14 @@ def create_submission(language,user_id,problem_id,code):
 
             run_result = run_c(code,test.input)
             result = judge(run_result, test.expected_output)
+
+        elif language == "cpp":
+
+            run_result = run_cpp(code,test.input)
+            result = judge(run_result, test.expected_output)
+
+        else:
+            raise ValueError(f"Linguagem não suportada: {language}")
 
         if result["verdict"] != "AC":
             if result["verdict"] == "TLE" or result["verdict"] == "RUNTIME_ERROR": 
