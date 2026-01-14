@@ -12,9 +12,10 @@ A plataforma permite que usuários criem contas, escolham problemas, enviem cód
 - Python 3
 - Flask 
 - Execução de código via `subprocess`
+- Docker (Dockerfile)
 
 ### **Banco de Dados**
-- SQLite
+- SQLAlchemy
 
 ### **Frontend**
 - HTML + CSS + JavaScript
@@ -107,7 +108,7 @@ pip install -r requirements.txt
 ### **4. Rodar**
 
 ```bash
-python app.py
+flask run
 ```
 
 Acesse no navegador:
@@ -115,51 +116,6 @@ Acesse no navegador:
 ```
 http://127.0.0.1:5000
 ```
-
----
-
-## ⚙️ Executor de Código
-
-O código enviado pelo usuário é salvo em um arquivo temporário e executado via:
-
-```python
-subprocess.run(
-    ["python3", file_path],
-    input=user_input.encode(),
-    stdout=subprocess.PIPE,
-    stderr=subprocess.PIPE,
-    timeout=3
-)
-```
-
-Retornando:
-
-* saída (stdout)
-* erros (stderr)
-* status
-* comparação com output esperado
-
----
-
-## 📌 Roadmap
-
-### **MVP**
-
-* [ ] Login e registro
-* [ ] Listar problemas
-* [ ] Página do problema
-* [ ] Execução de código Python
-* [ ] Comparação de output
-* [ ] Histórico de submissões
-
-### **Futuras Melhorias**
-
-* [ ] Suporte a mais linguagens (C, JS, Java)
-* [ ] Execução com Docker
-* [ ] Testes ocultos
-* [ ] Ranking de usuários
-* [ ] Interface mais profissional
-* [ ] Timer e modos de desafio
 
 ---
 
