@@ -26,45 +26,88 @@ A plataforma permite que usuários criem contas, escolham problemas, enviem cód
 ## 📁 Estrutura do Projeto
 
 ```
-
-online_judge/
-│
-├── app.py                        ← inicializa o Flask e registra blueprints
-├── config.py                     ← configs (debug, db path)
-│
-├── models/                       ← classes de dados (User, Problem, Submission)
-│   ├── **init**.py
-│   ├── user.py
-│   ├── problem.py
-│   └── submission.py
-│
-├── services/                     ← lógica de negócio
-│   ├── **init**.py
-│   ├── auth_service.py
-│   ├── judge_service.py          ← executor + comparação de output
-│   └── problem_service.py
-│
-├── controllers/                  ← rotas Flask
-│   ├── **init**.py
-│   ├── auth_controller.py
-│   ├── problem_controller.py
-│   └── submission_controller.py
-│
-├── templates/                    ← HTML com Jinja2
-│   ├── base.html
-│   ├── login.html
-│   ├── register.html
-│   ├── problems.html
-│   ├── problem_detail.html
-│   └── result.html
-│
-├── static/                       ← CSS, JS e bibliotecas
-│   ├── css/
-│   ├── js/
-│   └── vendor/                   ← Ace Editor, Bootstrap
-│
-├── database.sqlite               ← banco local
-└── requirements.txt
+JuizOnline
+├── README.md
+├── app
+│   ├── __init__.py
+│   ├── config.py
+│   ├── controller
+│   │   ├── __init__.py
+│   │   ├── admin_controller.py
+│   │   ├── auth_controller.py
+│   │   ├── problem_controller.py
+│   │   ├── ranking_controller.py
+│   │   ├── submission_controller.py
+│   │   └── test_case_controller.py
+│   ├── database.db
+│   ├── models
+│   │   ├── __init__.py
+│   │   ├── problem.py
+│   │   ├── submission.py
+│   │   ├── test_case.py
+│   │   └── user.py
+│   ├── service
+│   │   ├── __init__.py
+│   │   ├── auth_service.py
+│   │   ├── database.py
+│   │   ├── judge.py
+│   │   ├── problem_service.py
+│   │   ├── ranking_service.py
+│   │   ├── runner
+│   │   │   ├── c_runner.py
+│   │   │   ├── cpp_runner.py
+│   │   │   └── python_runner.py
+│   │   ├── submission_service.py
+│   │   └── test_case_service.py
+│   ├── static
+│   │   ├── css
+│   │   │   └── style.css
+│   │   └── js
+│   │       └── main.js
+│   ├── templates
+│   │   ├── admin_dashboard.html
+│   │   ├── base.html
+│   │   ├── create_problem.html
+│   │   ├── create_submission.html
+│   │   ├── create_test_case.html
+│   │   ├── home.html
+│   │   ├── list_problem_submissions.html
+│   │   ├── list_problems.html
+│   │   ├── list_test_cases.html
+│   │   ├── list_user_submissions.html
+│   │   ├── login.html
+│   │   ├── problem.html
+│   │   ├── problem_detail.html
+│   │   ├── ranking.html
+│   │   ├── register.html
+│   │   └── submission.html
+│   └── utils
+│       ├── decorators.py
+│       ├── sandbox.py
+│       └── test.py
+├── docker
+│   ├── c
+│   │   └── Dockerfile
+│   ├── c++
+│   │   └── Dockerfile
+│   ├── java
+│   │   └── Dockerfile
+│   └── python
+│       └── Dockerfile
+├── migrations
+│   ├── README
+│   ├── alembic.ini
+│   ├── env.py
+│   ├── script.py.mako
+│   └── versions
+│       └── 12954c2e4e01_.py
+├── readme.md
+├── requirements.txt
+├── run.py
+└── tests
+    ├── test_auth.py
+    ├── test_problem.py
+    └── test_submission.py
 
 ````
 
