@@ -344,7 +344,15 @@ button:active #theme-icon {
 }
 
 .form-text {
-    color: var(--text-muted) !important; /* Use sua variável muted para textos de ajuda */
+    color: var(--text-muted) !important;
+}
+
+.badge-admin-custom {
+    background-color: var(--warning-color) !important;
+    border-color: var(--warning-color) !important;
+    
+    
+    color: var(--bg-body) !important; 
 }
 
 /* =========================================
