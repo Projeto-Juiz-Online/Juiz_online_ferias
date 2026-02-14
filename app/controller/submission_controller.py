@@ -37,7 +37,6 @@ def list_submission_by_user_controller():
     
     user_id = current_user.id
 
-        
     submissions = list_submissions_by_user(user_id)
 
     submissions_by_problem = {}
