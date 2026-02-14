@@ -13,6 +13,8 @@ class Problem(db.Model):
     test_cases = db.relationship("TestCase", backref="problem", cascade = "all, delete-orphan")
     submissions = db.relationship('Submission', backref='problem', lazy=True, cascade="all, delete-orphan")
     difficulty = db.Column(db.String(50), default="Iniciante", nullable=False)
+    example_input = db.Column(db.Text, default="Entrada de exemplo não cadastrada", nullable=False)
+    example_output = db.Column(db.Text, default="Saída de exemplo não cadastrada", nullable=False)
 
     def __repr__(self):
         return f"<Problem {self.name} - Difficulty: {self.difficulty}>"

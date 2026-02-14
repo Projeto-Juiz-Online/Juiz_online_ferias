@@ -8,7 +8,6 @@ from app.models.submission import Submission
 from sqlalchemy import desc
 
 # Importando os Models
-from app.models.problem import Problem
 from app.models.test_case import TestCase 
 
 admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
@@ -44,6 +43,9 @@ def new_problem():
         constraints = request.form.get('constraints')
         difficulty = request.form.get('difficulty')
 
+        example_input = request.form.get('example_input')
+        example_output = request.form.get('example_output')
+
         input_data = request.form.get('input_data')
         expected_output = request.form.get('expected_output')
 
@@ -54,12 +56,15 @@ def new_problem():
                 input_description=input_desc,
                 output_description=output_desc,
                 constraints=constraints,
-                difficulty=difficulty
+                difficulty=difficulty,
+                example_input=example_input,
+                example_output=example_output
             )
 
             db.session.add(new_prob)
             
             db.session.flush() 
+
 
             test_case = TestCase(
                 problem_id=new_prob.id,

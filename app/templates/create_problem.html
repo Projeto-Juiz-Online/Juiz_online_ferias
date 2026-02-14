@@ -62,6 +62,31 @@ content %}
           ></textarea>
         </div>
 
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Exemplo de Entrada</label>
+                <textarea 
+                    name="example_input" 
+                    class="form-control font-monospace" 
+                    rows="4" 
+                    placeholder="Ex:&#10;10&#10;5"
+                    required></textarea>
+                <div class="form-text small">O aluno verá isso como um exemplo de entrada para o problema.</div>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Exemplo de Saída</label>
+                <textarea 
+                    name="example_output" 
+                    class="form-control font-monospace" 
+                    rows="4" 
+                    placeholder="Ex:&#10;15"
+                    required></textarea>
+                <div class="form-text small">Resultado esperado para o exemplo ao lado.</div>
+            </div>
+        </div>
+
+
         <div class="mb-4">
           <label class="form-label fw-semibold"> Restrições </label>
           <textarea

@@ -1,12 +1,15 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from app.service.submission_service import create_submission, list_submissions_by_user
 from flask_login import login_required, current_user 
+from app.models.problem import Problem
 
 submission_bp = Blueprint('submission', __name__)
 
 @submission_bp.route('/problems/<int:problem_id>/submission/new', methods=['GET','POST'])
 @login_required 
 def create_submission_controller(problem_id):
+
+    problem = Problem.query.get_or_404(problem_id)
 
     if request.method == "POST":
         code = request.form.get("code")
@@ -17,7 +20,7 @@ def create_submission_controller(problem_id):
 
         if not code or not language:
             flash("Por favor, preencha todos os campos.", "danger")
-            return render_template("create_submission.html", problem_id=problem_id)
+            return render_template("create_submission.html", problem=problem)
         
         try:
             create_submission(language, user_id, problem_id, code)
@@ -28,7 +31,7 @@ def create_submission_controller(problem_id):
         flash("Submissão criada com sucesso!", "success")
         return redirect(url_for("problem.get_problem_controller", id=problem_id))
 
-    return render_template("create_submission.html", problem_id=problem_id)
+    return render_template("create_submission.html", problem=problem)
 
 
 @submission_bp.route('/user/submissions')

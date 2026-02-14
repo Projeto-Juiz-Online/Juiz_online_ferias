@@ -294,7 +294,8 @@ button:active #theme-icon {
 }
 
 /* =========================================
-   7. BOTÕES PERSONALIZADOS
+   7. ITEMS PERSONALIZADOS POR TEMA
+     (Botões, Badges, etc)
    ========================================= */
 
 .btn-outline-adaptive {
@@ -321,6 +322,30 @@ button:active #theme-icon {
     border: 1px solid var(--border-color);
     border-radius: 8px;
 }   
+
+.badge-outline-adaptive {
+    background-color: transparent;
+    
+    color: var(--text-body);            
+    border: 1px solid var(--text-body); 
+    
+    font-weight: 600;
+    transition: all 0.2s ease-in-out;
+}
+
+.background_outline-adaptive {
+    background-color: transparent;
+    
+    color: var(--text-body);            
+    border: 1px solid var(--text-body); 
+    
+    font-weight: 600;
+    transition: all 0.2s ease-in-out;
+}
+
+.form-text {
+    color: var(--text-muted) !important; /* Use sua variável muted para textos de ajuda */
+}
 
 /* =========================================
    8. TABELA DASHBOARD ADMIN
@@ -398,7 +423,6 @@ button:active #theme-icon {
     background-color: rgba(255, 255, 255, 0.03); 
 }
 
-/* Podium and medal visual tweaks for ranking page */
 .podium {
     gap: 1rem;
 }
@@ -425,7 +449,6 @@ button:active #theme-icon {
     font-size: 1.5rem;
 }
 
-/* small responsive tweak */
 @media (max-width: 576px) {
     .podium { gap: 0.5rem; }
     .podium-col { width: 100px; }

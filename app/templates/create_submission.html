@@ -1,76 +1,136 @@
 {% extends "base.html" %}
-{% block title %}Nova Submissão{% endblock %}
+{% block title %}Resolver: {{ problem.title }}{% endblock %}
 
 {% block content %}
 
-<div class="row justify-content-center">
-    <div class="col-lg-8">
+<style>
+    .theme-card {
+        background-color: var(--bg-surface);
+        color: var(--text-body);
+        border: 1px solid var(--border-color);
+    }
+    
+    .example-container {
+        background-color: var(--bg-body); 
+        border: 1px solid var(--border-color);
+    }
 
-        <div class="surface p-5">
+    .example-box {
+        background-color: var(--bg-input);
+        color: var(--text-body);
+        border: 1px solid var(--border-color);
+        font-family: var(--font-code);
+    }
 
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h1 class="fw-bold mb-0">
-                    Nova Submissão
-                </h1>
+    .code-editor {
+        background-color: var(--bg-input) !important;
+        color: var(--text-body) !important;
+        border: 1px solid var(--border-color);
+        font-family: var(--font-code);
+        caret-color: var(--primary-color);
+    }
 
-                <a href="{{ url_for('problem.get_problem_controller', id=problem_id) }}"
-                   class="btn btn-outline-secondary">
-                    ← Voltar ao problema
-                </a>
+    .form-select, .form-control {
+        background-color: var(--bg-input);
+        color: var(--text-body);
+        border-color: var(--border-color);
+    }
+    
+    .form-select:focus, .form-control:focus {
+        background-color: var(--bg-input);
+        color: var(--text-body);
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.25rem rgba(var(--primary-color-rgb), 0.25);
+    }
+</style>
+
+<div class="container-fluid px-4"> 
+    
+    <div class="d-flex justify-content-between align-items-center mb-3 mt-3">
+        <h2 class="fw-bold" style="color: var(--primary-color);">
+            <i class="bi bi-code-square"></i> {{ problem.title }}
+        </h2>
+        <a href="{{ url_for('problem.list_problems_controller') }}" class="btn btn-outline-secondary btn-sm">
+            ← Lista de Problemas
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-5 mb-4">
+            <div class="card shadow-sm h-100 theme-card" style="max-height: 80vh; overflow-y: auto;">
+                <div class="card-body">
+                    
+                    <h5 class="card-title fw-bold">Descrição</h5>
+                    <p class="card-text" style="white-space: pre-wrap; opacity: 0.9;">{{ problem.description }}</p>
+
+                    <hr style="border-color: var(--border-color);">
+
+                    <h6 class="fw-bold text-danger">Restrições</h6>
+                    
+                    <p class="small" style="white-space: pre-wrap; font-family: var(--font-code); color: var(--text-body);">{{ problem.constraints }}</p>
+                    
+
+                    <hr style="border-color: var(--border-color);">
+
+                    <div class="p-3 rounded example-container">
+                        <h6 class="fw-bold">Exemplo de Entrada:</h6>
+                        <pre class="mb-3 p-2 rounded example-box">{{ problem.example_input }}</pre>
+
+                        <h6 class="fw-bold">Exemplo de Saída:</h6>
+                        <pre class="mb-0 p-2 rounded example-box">{{ problem.example_output }}</pre>
+                    </div>
+                </div>
             </div>
+        </div>
 
-            {# mensagens flash #}
-            {% with messages = get_flashed_messages(with_categories=true) %}
-              {% if messages %}
-                {% for category, message in messages %}
-                  <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                  </div>
-                {% endfor %}
-              {% endif %}
-            {% endwith %}
+        <div class="col-lg-7">
+            <div class="card shadow-sm h-100 theme-card">
+                <div class="card-body d-flex flex-column">
+                    
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                            <div class="alert alert-{{ category }} alert-dismissible fade show py-2" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
 
-            <form method="POST">
+                    <form method="POST" class="d-flex flex-column flex-grow-1">
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="language" class="form-label fw-bold small text-uppercase">Linguagem</label>
+                                <select name="language" id="language" class="form-select" required>
+                                    <option value="" disabled selected>Escolha...</option>
+                                    <option value="python">Python</option>
+                                    <option value="c">C </option>
+                                    <option value="cpp">C++</option>
+                                </select>
+                            </div>
+                        </div>
 
-                <div class="mb-4">
-                    <label for="language" class="form-label fw-semibold">
-                        Linguagem
-                    </label>
-                    <select name="language" id="language" class="form-select form-select-lg" required>
-                        <option value="" disabled selected>Selecione a linguagem</option>
-                        <option value="python">Python</option>
-                        <option value="c">C</option>
-                        <option value="cpp">C++</option>
-                    </select>
+                        <div class="mb-3 flex-grow-1">
+                            <label for="code" class="form-label fw-bold small text-uppercase">Seu Código</label>
+                            <textarea 
+                                name="code" 
+                                id="code" 
+                                class="form-control code-editor" 
+                                style="height: 50vh; resize: none;"
+                                placeholder="# Escreva sua solução aqui..." 
+                                required></textarea>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success btn-lg fw-bold">
+                                <i class="bi bi-play-fill"></i> Submeter Solução
+                            </button>
+                        </div>
+                    </form>
                 </div>
-
-                <div class="mb-4">
-                    <label for="code" class="form-label fw-semibold">
-                        Código
-                    </label>
-                    <textarea
-                        name="code"
-                        id="code"
-                        class="form-control font-monospace"
-                        rows="14"
-                        placeholder="Cole seu código aqui"
-                        required></textarea>
-                </div>
-
-                <div class="d-flex justify-content-end gap-2">
-                    <a href="{{ url_for('problem.get_problem_controller', id=problem_id) }}"
-                       class="btn btn-outline-secondary">
-                        Cancelar
-                    </a>
-
-                    <button type="submit" class="btn btn-primary px-4">
-                        Enviar Submissão
-                    </button>
-                </div>
-
-            </form>
-
+            </div>
         </div>
     </div>
 </div>
