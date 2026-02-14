@@ -10,7 +10,8 @@ contest_bp = Blueprint('contest',__name__)
 def list_contests_controller():
 
     contests = list_contests()
-    return render_template("list_contests.html", contests = contests)
+    now = datetime.utcnow()
+    return render_template("list_contests.html", contests=contests, now=now)
 
 @contest_bp.route('/contest/new', methods=['GET','POST'])
 @login_required 

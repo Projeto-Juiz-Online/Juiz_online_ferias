@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}Contests | Juiz Online{% endblock %}
+
+{% block content %}
+
+<div class="mb-3">
+	<a
+		href="{{ url_for('home') }}"
+		class="text-decoration-none d-inline-flex align-items-center gap-2 back-link"
+	>
+		<span class="fs-5">←</span>
+		<span class="fw-bold small text-uppercase">Voltar para Inicio</span>
+	</a>
+</div>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+	<div>
+		<h1 class="fw-bold mb-0">Contests</h1>
+		<p class="text-muted small mb-0">Confira os contests ativos e futuros.</p>
+	</div>
+
+	{% if current_user.is_authenticated and current_user.is_admin %}
+	<a href="{{ url_for('contest.create_contest_controller') }}" class="btn btn-primary fw-bold shadow-sm">
+		+ Novo Contest
+	</a>
+	{% endif %}
+</div>
+
+<div class="row g-4">
+	{% for contest in contests %}
+	<div class="col-md-6 col-lg-4">
+		<div class="surface p-4 h-100 d-flex flex-column justify-content-between shadow-sm" style="border-radius: 12px;">
+			<div class="mb-3">
+				<div class="d-flex align-items-center justify-content-between">
+					<h5 class="fw-bold mb-0 text-truncate" title="{{ contest.name }}">
+						{{ contest.name }}
+					</h5>
+
+					{% if now >= contest.start_time and now <= contest.end_time %}
+					<span class="badge bg-success">Ativo</span>
+					{% elif now < contest.start_time %}
+					<span class="badge bg-info text-dark">Agendado</span>
+					{% else %}
+					<span class="badge bg-secondary">Encerrado</span>
+					{% endif %}
+				</div>
+
+				{% if contest.description %}
+				<p class="text-muted small mt-2 mb-0" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+					{{ contest.description }}
+				</p>
+				{% endif %}
+			</div>
+
+			<div class="mb-3">
+				<div class="d-flex flex-column gap-1 small text-muted">
+					<span>Inicio: {{ contest.start_time.strftime('%d/%m/%Y %H:%M') }}</span>
+					<span>Fim: {{ contest.end_time.strftime('%d/%m/%Y %H:%M') }}</span>
+					<span>Problemas: {{ contest.problems | length }}</span>
+				</div>
+			</div>
+
+			<div class="mt-2">
+				<a href="{{ url_for('contest.list_contests_controller') }}" class="btn btn-outline-secondary w-100">
+					Ver Detalhes
+				</a>
+			</div>
+		</div>
+	</div>
+
+	{% else %}
+	<div class="col-12">
+		<div class="surface p-5 text-center shadow-sm">
+			<div class="fs-1 mb-3">📭</div>
+			<h4 class="fw-bold">Nenhum contest encontrado</h4>
+			<p class="text-muted">Crie um contest para começar.</p>
+			{% if current_user.is_authenticated and current_user.is_admin %}
+			<a href="{{ url_for('contest.create_contest_controller') }}" class="btn btn-outline-secondary mt-2">
+				Criar Contest
+			</a>
+			{% endif %}
+		</div>
+	</div>
+	{% endfor %}
+</div>
+
+{% endblock %}
