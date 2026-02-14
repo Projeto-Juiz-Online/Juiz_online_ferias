@@ -54,3 +54,5 @@ def remove_problem(problem_id, contest_id):
     db.session.commit()
     return problem
 
+def list_contests():
+    return Contest.query.all()
