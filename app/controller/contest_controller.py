@@ -42,3 +42,57 @@ def create_contest_controller():
         return redirect(url_for("contest.list_contests_controller"))
 
     return render_template("create_contest.html")
+
+@contest_bp.route('/contest/new/user', methods=['GET','POST'])
+@login_required 
+@admin_required
+def add_user_controller():
+
+    if request.method=="POST":
+
+        user_raw = request.form.get("user_id")
+        contest_raw = request.form.get("contest_id")
+
+        if not user_raw or not contest_raw:
+            flash("Por favor, preencha todos os campos.", "danger")
+            return render_template("add_user.html")
+
+        try:
+            user_id = int(user_raw)
+            contest_id = int(contest_raw)
+            add_user(user_id,contest_id)
+        except ValueError as e:
+            flash(str(e), "danger")
+            return redirect(url_for("contest.add_user_controller"))
+
+        flash("Usuario Adicionado Com Sucesso!", "success")
+        return redirect(url_for("contest.list_contests_controller"))
+
+    return render_template("add_user.html")
+
+@contest_bp.route('/contest/new/problem', methods=['GET','POST'])
+@login_required 
+@admin_required
+def add_problem_controller():
+
+    if request.method=="POST":
+
+        problem_raw = request.form.get("problem_id")
+        contest_raw = request.form.get("contest_id")
+
+        if not problem_raw or not contest_raw:
+            flash("Por favor, preencha todos os campos.", "danger")
+            return render_template("add_problem.html")
+
+        try:
+            problem_id = int(problem_raw)
+            contest_id = int(contest_raw)
+            add_problem(problem_id,contest_id)
+        except ValueError as e:
+            flash(str(e), "danger")
+            return redirect(url_for("contest.add_problem_controller"))
+
+        flash("Problema Adicionado Com Sucesso!", "success")
+        return redirect(url_for("contest.list_contests_controller"))
+
+    return render_template("add_problem.html")
