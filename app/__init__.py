@@ -9,6 +9,7 @@ from app.controller.test_case_controller import test_case_bp
 from app.controller.submission_controller import submission_bp
 from app.controller.ranking_controller import ranking_bp    
 from app.controller.admin_controller import admin_bp
+from app.controller.contest_controller import contest_bp    
 
 
 def create_app():
@@ -41,6 +42,7 @@ def create_app():
     app.register_blueprint(submission_bp)
     app.register_blueprint(ranking_bp)
     app.register_blueprint(admin_bp)
+    app.register_blueprint(contest_bp)
 
     @app.route("/")
     def home():

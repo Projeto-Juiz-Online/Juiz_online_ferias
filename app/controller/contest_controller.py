@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
-from app.service.contest import create_contest, add_user, add_problem, delete_contest, remove_user, remove_problem, list_contests
+from app.service.contest_service import create_contest, add_user, add_problem, delete_contest, remove_user, remove_problem, list_contests
 from datetime import datetime
 from flask_login import login_required
 from app.utils.decorators import admin_required

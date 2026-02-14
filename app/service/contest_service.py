@@ -1,7 +1,7 @@
 from app.service.database import db
-from app.model.user import User
-from app.model.problem import Problem
-from app.model.contest import Contest
+from app.models.user import User
+from app.models.problem import Problem
+from app.models.contest import Contest
 
 def create_contest(name,description,start_time,end_time,creator_id):
 
