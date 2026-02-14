@@ -33,6 +33,12 @@
                     class="btn btn-outline-light btn-lg px-4 btn-outline-adaptive">
                     Minhas submissões
                 </a>
+                {% if current_user.is_admin %}
+                <a href="{{ url_for('contest.create_contest_controller') }}"
+                    class="btn btn-warning btn-lg px-4">
+                    Criar Contest
+                </a>
+                {% endif %}
             </div>
 
         </div>
