@@ -42,6 +42,7 @@ def new_problem():
         output_desc = request.form.get('output_description')
         constraints = request.form.get('constraints')
         difficulty = request.form.get('difficulty')
+        belongs_only_to_contest = request.form.get('belongs_only_to_contest') == 'on'
 
         example_input = request.form.get('example_input')
         example_output = request.form.get('example_output')
@@ -57,6 +58,7 @@ def new_problem():
                 output_description=output_desc,
                 constraints=constraints,
                 difficulty=difficulty,
+                belongs_only_to_contest=belongs_only_to_contest,
                 example_input=example_input,
                 example_output=example_output
             )

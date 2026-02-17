@@ -19,6 +19,9 @@ def list_problems_controller():
 
     query = Problem.query
 
+    if not current_user.is_authenticated or not current_user.is_admin:
+        query = query.filter_by(belongs_only_to_contest=False)
+
     if search:
         query = query.filter(Problem.name.ilike(f"%{search}%"))
     
