@@ -85,9 +85,18 @@
                           📊 Dashboard Admin
                         </a>
                       </li>
+                      <li>
+                        <a
+                          class="dropdown-item"
+                          href="{{ url_for('contest.create_contest_controller') }}"
+                        >
+                          🏆 Criar Contest
+                        </a>
+                      </li>
                     </ul>
                   </li>
-                  {% endif %} <li class="nav-item">
+                  {% endif %}
+                   <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a>
                   </li>
 
