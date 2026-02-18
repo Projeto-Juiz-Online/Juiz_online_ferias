@@ -355,6 +355,12 @@ button:active #theme-icon {
     color: var(--bg-body) !important; 
 }
 
+.badge-contest {
+    background-color: #c82c7a !important; 
+    color: #ffffff !important;
+    border: 1px solid #932059;
+}
+
 /* =========================================
    8. TABELA DASHBOARD ADMIN
    ========================================= */
