@@ -1,8 +1,12 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from app.service.contest_service import create_contest, add_user, add_problem, delete_contest, remove_user, remove_problem, list_contests
 from datetime import datetime
-from flask_login import login_required
+from flask_login import login_required,  current_user
 from app.utils.decorators import admin_required
+from app.service.database import db
+
+from app.models.contest import Contest
+from app.models.submission import Submission  
 
 contest_bp = Blueprint('contest',__name__)
 
@@ -97,3 +101,25 @@ def add_problem_controller():
         return redirect(url_for("contest.list_contests_controller"))
 
     return render_template("add_problem.html")
+
+
+#Apagar a contest e mantem as submissões.
+@contest_bp.route('/delete/<int:contest_id>', methods=['POST'])
+@login_required
+@admin_required
+def delete_contest_controller(contest_id):
+    contest = Contest.query.get_or_404(contest_id)
+    
+    try:
+        
+        db.session.delete(contest)
+        db.session.commit()
+        
+        flash(f'Contest "{contest.name}" removido com sucesso!', 'success')
+        
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Erro ao deletar contest: {str(e)}', 'danger')
+        print(f"Erro Delete Contest: {e}")
+        
+    return redirect(url_for('contest.list_contests_controller'))
