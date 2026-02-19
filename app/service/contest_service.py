@@ -3,6 +3,11 @@ from app.models.user import User
 from app.models.problem import Problem
 from app.models.contest import Contest, ContestRegistration
 from datetime import datetime
+from zoneinfo import ZoneInfo
+
+
+def get_brazil_now_naive():
+    return datetime.now(ZoneInfo("America/Sao_Paulo")).replace(tzinfo=None)
 
 def create_contest(name,description,start_time,end_time,creator_id):
 
@@ -91,7 +96,7 @@ def get_contest_ranking(contest_id):
 
 def is_contest_possible(start_time, end_time) -> bool:
 
-    if start_time <= datetime.now():
+    if start_time <= get_brazil_now_naive():
         return False
     
     if end_time <= start_time:
@@ -101,7 +106,8 @@ def is_contest_possible(start_time, end_time) -> bool:
 
 def is_contest_running(start_time, end_time) -> bool:
 
-    if datetime.now() >= start_time and datetime.now()<=end_time:
+    now = get_brazil_now_naive()
+    if now >= start_time and now <= end_time:
 
         return True
     

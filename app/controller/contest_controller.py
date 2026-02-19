@@ -1,20 +1,24 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from app.service.contest_service import create_contest, add_user, add_problem, delete_contest, remove_user, remove_problem, list_contests, get_contest, get_contest_ranking
 from datetime import datetime
+from zoneinfo import ZoneInfo
 from flask_login import login_required,  current_user
 from app.utils.decorators import admin_required
 from app.service.database import db
-
 from app.models.contest import Contest
 from app.models.submission import Submission  
 
 contest_bp = Blueprint('contest',__name__)
 
+
+def get_brazil_now_naive():
+    return datetime.now(ZoneInfo("America/Sao_Paulo")).replace(tzinfo=None)
+
 @contest_bp.route('/contests', methods=["GET"])
 def list_contests_controller():
 
     contests = list_contests()
-    now = datetime.utcnow()
+    now = get_brazil_now_naive()
     return render_template("list_contests.html", contests=contests, now=now)
 
 @contest_bp.route('/contests/<int:id>', methods=['GET'])
@@ -26,7 +30,7 @@ def get_contest_controller(id):
         flash("Contest não encontrado.", "danger")
         return redirect(url_for("contest.list_contests_controller"))
 
-    now = datetime.utcnow()
+    now = get_brazil_now_naive()
     ranking = get_contest_ranking(id)
     return render_template("contest_detail.html", contest=contest, now=now, ranking=ranking)
 
@@ -49,8 +53,10 @@ def create_contest_controller():
             return render_template("create_contest.html")
 
         try:
-            start_time = datetime.fromisoformat(start_raw)
-            end_time = datetime.fromisoformat(end_raw)
+            br_tz = ZoneInfo("America/Sao_Paulo")
+            start_time = datetime.fromisoformat(start_raw).replace(tzinfo=br_tz).replace(tzinfo=None)
+            end_time = datetime.fromisoformat(end_raw).replace(tzinfo=br_tz).replace(tzinfo=None)
+            
             create_contest(name, description, start_time, end_time, creator_id)
         except ValueError as e:
             flash(str(e), "danger")
