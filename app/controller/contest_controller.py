@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
-from app.service.contest_service import create_contest, add_user, add_problem, delete_contest, remove_user, remove_problem, list_contests
+from app.service.contest_service import create_contest, add_user, add_problem, delete_contest, remove_user, remove_problem, list_contests, get_contest
 from datetime import datetime
 from flask_login import login_required,  current_user
 from app.utils.decorators import admin_required
@@ -16,6 +16,18 @@ def list_contests_controller():
     contests = list_contests()
     now = datetime.utcnow()
     return render_template("list_contests.html", contests=contests, now=now)
+
+@contest_bp.route('/contests/<int:id>', methods=['GET'])
+def get_contest_controller(id):
+
+    contest = get_contest(id)
+
+    if not contest:
+        flash("Contest não encontrado.", "danger")
+        return redirect(url_for("contest.list_contests_controller"))
+
+    now = datetime.utcnow()
+    return render_template("contest_detail.html", contest=contest, now=now)
 
 @contest_bp.route('/contest/new', methods=['GET','POST'])
 @login_required 
