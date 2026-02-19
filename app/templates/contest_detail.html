@@ -78,6 +78,35 @@
 					</div>
 				</div>
 			</div>
+
+			<div class="mt-4 d-flex gap-2 flex-wrap">
+				{% if current_user.is_authenticated and current_user.is_admin %}
+				<form 
+					    action="{{ url_for('contest.delete_contest_controller', contest_id=contest.id) }}" 
+					    method="POST" 
+					    onsubmit="return confirm('Tem certeza que deseja excluir o contest &quot;{{ contest.name }}&quot;? Essa ação não pode ser desfeita.');"
+					    class="flex-grow-1"
+				>
+					<button type="submit" class="btn btn-outline-danger w-100 d-flex align-items-center justify-content-center gap-2">
+						<i class="bi bi-trash"></i> Excluir Contest
+					</button>
+				</form>
+				{% endif %}
+
+				{% if current_user.is_authenticated %}
+				<form 
+					    action="{{ url_for('contest.add_user_controller') }}" 
+					    method="POST"
+					    class="flex-grow-1"
+				>
+					<input type="hidden" name="user_id" value="{{ current_user.id }}">
+					<input type="hidden" name="contest_id" value="{{ contest.id }}">
+					<button type="submit" class="btn btn-outline-primary w-100 d-flex align-items-center justify-content-center gap-2">
+						✨ Inscrever-se neste Contest
+					</button>
+				</form>
+				{% endif %}
+			</div>
 		</div>
 
 		<div class="surface p-4 shadow-sm">
