@@ -2,8 +2,14 @@ from app.service.database import db
 from app.models.user import User
 from app.models.problem import Problem
 from app.models.contest import Contest
+from datetime import datetime
 
 def create_contest(name,description,start_time,end_time,creator_id):
+
+    if not is_contest_possible(start_time, end_time):
+        if end_time <= start_time:
+            raise ValueError("O horário de término deve ser maior que o horário de início.")
+        raise ValueError("O horário de início deve ser no futuro.")
 
     contest = Contest(name=name, description=description, start_time=start_time, end_time=end_time, creator_id=creator_id)
 
@@ -59,3 +65,15 @@ def list_contests():
 
 def get_contest(contest_id):
     return Contest.query.get(contest_id)
+
+def is_contest_possible(start_time, end_time) -> bool:
+
+    if start_time <= datetime.now():
+        return False
+    
+    if end_time <= start_time:
+        return False
+
+    return True
+
+
