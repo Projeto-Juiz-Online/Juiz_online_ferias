@@ -27,7 +27,20 @@ def delete_contest(contest_id):
 def add_user(user_id, contest_id):
 
     contest = Contest.query.get(contest_id)
+
+    if not contest:
+        raise ValueError("Contest não encontrado.")
+
+    if not is_contest_running(contest.start_time, contest.end_time):
+        raise ValueError("O contest não está aberto para inscrições. Verifique os horários de início e fim.")
+
     user = User.query.get(user_id)
+
+    if not user:
+        raise ValueError("Usuário não encontrado.")
+
+    if user in contest.users:
+        raise ValueError("Este usuário já está registrado neste contest.")
 
     contest.users.append(user)
     db.session.commit()
@@ -76,4 +89,11 @@ def is_contest_possible(start_time, end_time) -> bool:
 
     return True
 
+def is_contest_running(start_time, end_time) -> bool:
+
+    if datetime.now() >= start_time and datetime.now()<=end_time:
+
+        return True
+    
+    return False
 
