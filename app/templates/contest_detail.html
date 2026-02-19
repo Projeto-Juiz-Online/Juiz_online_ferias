@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% block title %}{{ contest.name }} | Juiz Online{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+	<div class="col-lg-10">
+		<div class="mb-3">
+			<a
+				href="{{ url_for('contest.list_contests_controller') }}"
+				class="text-decoration-none d-inline-flex align-items-center gap-2 back-link"
+			>
+				<span class="fs-5">←</span>
+				<span class="fw-bold small text-uppercase">Voltar para Contests</span>
+			</a>
+		</div>
+
+		<div class="surface p-5 mb-4 shadow-sm border-0 position-relative">
+			<div class="d-flex justify-content-between align-items-start mb-3">
+				<div>
+					<div class="d-flex gap-2 mb-2">
+						{% if now >= contest.start_time and now <= contest.end_time %}
+						<span class="badge bg-success rounded-pill">Ativo</span>
+						{% elif now < contest.start_time %}
+						<span class="badge bg-info text-dark rounded-pill">Agendado</span>
+						{% else %}
+						<span class="badge bg-secondary rounded-pill">Encerrado</span>
+						{% endif %}
+					</div>
+
+					<h1 class="fw-bold mb-0 text-primary">{{ contest.name }}</h1>
+				</div>
+			</div>
+
+			<hr class="opacity-25 my-4" />
+
+			<div class="mb-4">
+				{% if contest.description %}
+				<p class="fs-5 lh-base mb-0" style="white-space: pre-line; color: var(--text-body);">
+					{{ contest.description }}
+				</p>
+				{% else %}
+				<p class="text-muted mb-0">Este contest não possui descrição.</p>
+				{% endif %}
+			</div>
+
+			<div class="row g-4">
+				<div class="col-md-4">
+					<div class="card h-100 border-0" style="background-color: var(--bg-body);">
+						<div class="card-header bg-transparent border-0 fw-bold text-uppercase text-muted small">📅 Início</div>
+						<div class="card-body p-3 pt-0">
+							<span class="font-monospace" style="color: var(--text-body);">
+								{{ contest.start_time.strftime('%d/%m/%Y %H:%M') }}
+							</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-4">
+					<div class="card h-100 border-0" style="background-color: var(--bg-body);">
+						<div class="card-header bg-transparent border-0 fw-bold text-uppercase text-muted small">🏁 Fim</div>
+						<div class="card-body p-3 pt-0">
+							<span class="font-monospace" style="color: var(--text-body);">
+								{{ contest.end_time.strftime('%d/%m/%Y %H:%M') }}
+							</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-4">
+					<div class="card h-100 border-0" style="background-color: var(--bg-body);">
+						<div class="card-header bg-transparent border-0 fw-bold text-uppercase text-muted small">👥 Participantes</div>
+						<div class="card-body p-3 pt-0">
+							<span class="font-monospace" style="color: var(--text-body);">
+								{{ contest.users | length }}
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="surface p-4 shadow-sm">
+			<h4 class="fw-bold mb-4 border-bottom pb-2">🧩 Problemas do Contest</h4>
+
+			{% if contest.problems %}
+			<div class="row g-3">
+				{% for problem in contest.problems %}
+				<div class="col-12 col-md-6">
+					<div class="border rounded p-3 h-100 d-flex justify-content-between align-items-center">
+						<div>
+							<div class="fw-semibold">{{ problem.name }}</div>
+							<small class="text-muted">Dificuldade: {{ problem.difficulty }}</small>
+						</div>
+						<a
+							href="{{ url_for('problem.get_problem_controller', id=problem.id) }}"
+							class="btn btn-sm btn-outline-primary"
+						>
+							Ver Problema
+						</a>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+			{% else %}
+			<div class="text-center py-5 text-muted">
+				<div class="fs-1 mb-2">📭</div>
+				<p class="mb-0">Este contest ainda não possui problemas cadastrados.</p>
+			</div>
+			{% endif %}
+		</div>
+	</div>
+</div>
+
+{% endblock %}
