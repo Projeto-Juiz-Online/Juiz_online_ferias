@@ -22,7 +22,7 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app, db)
 
-    from app.models import user, problem, submission
+    from app.models import user, problem, submission, contest
 
     login_manager = LoginManager()
     login_manager.init_app(app)

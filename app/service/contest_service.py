@@ -1,7 +1,7 @@
 from app.service.database import db
 from app.models.user import User
 from app.models.problem import Problem
-from app.models.contest import Contest
+from app.models.contest import Contest, ContestRegistration
 from datetime import datetime
 
 def create_contest(name,description,start_time,end_time,creator_id):
@@ -39,19 +39,23 @@ def add_user(user_id, contest_id):
     if not user:
         raise ValueError("Usuário não encontrado.")
 
-    if user in contest.users:
+    existing_registration = ContestRegistration.query.filter_by(user_id=user_id, contest_id=contest_id).first()
+    if existing_registration:
         raise ValueError("Este usuário já está registrado neste contest.")
 
-    contest.users.append(user)
+    registration = ContestRegistration(user_id=user_id, contest_id=contest_id, points=0)
+    db.session.add(registration)
     db.session.commit()
     return user
 
 def remove_user(user_id, contest_id):
 
-    contest = Contest.query.get(contest_id)
-    user = User.query.get(user_id)
+    registration = ContestRegistration.query.filter_by(user_id=user_id, contest_id=contest_id).first()
+    if not registration:
+        raise ValueError("Inscrição não encontrada para este usuário neste contest.")
 
-    contest.users.remove(user)
+    user = registration.user
+    db.session.delete(registration)
     db.session.commit()
     return user
 
@@ -78,6 +82,12 @@ def list_contests():
 
 def get_contest(contest_id):
     return Contest.query.get(contest_id)
+
+def get_contest_ranking(contest_id):
+    return ContestRegistration.query.filter_by(contest_id=contest_id).join(User).order_by(
+        ContestRegistration.points.desc(),
+        User.username.asc()
+    ).all()
 
 def is_contest_possible(start_time, end_time) -> bool:
 

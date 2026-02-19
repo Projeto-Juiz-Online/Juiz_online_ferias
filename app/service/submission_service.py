@@ -7,6 +7,7 @@ from app.service.runner.python_runner import run_python
 from app.service.runner.c_runner import run_c
 from app.service.runner.cpp_runner import run_cpp
 from app.models.test_case import TestCase
+from app.models.contest import ContestRegistration
 
 # Tabela de Pontos Fixa
 POINTS_TABLE = {
@@ -96,6 +97,7 @@ def create_submission(language,user_id,problem_id,code):
             user.points = 0
 
         user.points += points_to_add
+        _add_contest_points_for_submission(user_id, problem, submission.id, points_to_add)
         print(f"Adicionando {points_to_add} pontos ao usuário {user.username} por resolver o problema {problem.name}")
 
     submission.total_tests = total
@@ -106,6 +108,25 @@ def create_submission(language,user_id,problem_id,code):
     
     db.session.commit()
     return submission
+
+def _add_contest_points_for_submission(user_id, problem, submission_id, points_to_add):
+
+    for contest in problem.contests:
+        registration = ContestRegistration.query.filter_by(contest_id=contest.id, user_id=user_id).first()
+        if not registration:
+            continue
+
+        already_solved_in_contest = Submission.query.filter(
+            Submission.user_id == user_id,
+            Submission.problem_id == problem.id,
+            Submission.status == 'AC',
+            Submission.id != submission_id
+        ).count()
+
+        if already_solved_in_contest == 0:
+            if registration.points is None:
+                registration.points = 0
+            registration.points += points_to_add
 
 def list_submissions_by_user(user_id):
 

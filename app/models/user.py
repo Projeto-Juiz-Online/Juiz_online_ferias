@@ -1,4 +1,5 @@
 from app import db
+from sqlalchemy.ext.associationproxy import association_proxy
 
 class User(db.Model):
 
@@ -10,6 +11,8 @@ class User(db.Model):
     points = db.Column(db.Integer, nullable=True)
     
     is_admin = db.Column(db.Boolean, default=False)
+    contest_registrations = db.relationship("ContestRegistration", back_populates="user", cascade="all, delete-orphan")
+    contests_joined = association_proxy("contest_registrations", "contest")
     
 
     def __repr__(self):

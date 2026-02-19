@@ -110,6 +110,35 @@
 		</div>
 
 		<div class="surface p-4 shadow-sm">
+			<h4 class="fw-bold mb-4 border-bottom pb-2">🏆 Ranking do Contest</h4>
+
+			{% if ranking %}
+			<div class="table-responsive mb-4">
+				<table class="table table-dashboard table-hover align-middle mb-0">
+					<thead>
+						<tr class="text-secondary">
+							<th>#</th>
+							<th>Usuário</th>
+							<th class="text-end">Pontos no Contest</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for registration in ranking %}
+						<tr>
+							<td class="fw-bold">{{ loop.index }}</td>
+							<td>{{ registration.user.username }}</td>
+							<td class="text-end fw-bold text-warning">{{ registration.points or 0 }}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+			{% else %}
+			<div class="text-center py-4 text-muted mb-4">
+				<p class="mb-0">Nenhum participante inscrito ainda neste contest.</p>
+			</div>
+			{% endif %}
+
 			<h4 class="fw-bold mb-4 border-bottom pb-2">🧩 Problemas do Contest</h4>
 
 			{% if contest.problems %}
