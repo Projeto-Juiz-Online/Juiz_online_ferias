@@ -139,6 +139,26 @@
 			</div>
 			{% endif %}
 
+			{% if current_user.is_authenticated and current_user.is_admin %}
+			<h4 class="fw-bold mb-4 border-bottom pb-2">➕ Adicionar Problema ao Contest</h4>
+			<form
+				action="{{ url_for('contest.add_problem_controller') }}"
+				method="POST"
+				class="mb-4"
+			>
+				<input type="hidden" name="contest_id" value="{{ contest.id }}">
+				<div class="mb-3">
+					<label for="problem_id" class="form-label">Selecione um problema</label>
+					<select id="problem_id" name="problem_id" class="form-select" size="8" required>
+						{% for problem in available_problems %}
+						<option value="{{ problem.id }}">{{ problem.name }}</option>
+						{% endfor %}
+					</select>
+				</div>
+				<button type="submit" class="btn btn-outline-primary">Adicionar Problema</button>
+			</form>
+			{% endif %}
+
 			<h4 class="fw-bold mb-4 border-bottom pb-2">🧩 Problemas do Contest</h4>
 
 			{% if contest.problems %}

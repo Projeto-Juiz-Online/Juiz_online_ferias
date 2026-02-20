@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from app.service.contest_service import create_contest, add_user, add_problem, delete_contest, remove_user, remove_problem, list_contests, get_contest, get_contest_ranking
+from app.service.problem_service import list_problems
 from datetime import datetime
 from zoneinfo import ZoneInfo
 from flask_login import login_required,  current_user
@@ -32,7 +33,8 @@ def get_contest_controller(id):
 
     now = get_brazil_now_naive()
     ranking = get_contest_ranking(id)
-    return render_template("contest_detail.html", contest=contest, now=now, ranking=ranking)
+    available_problems = list_problems()
+    return render_template("contest_detail.html", contest=contest, now=now, ranking=ranking, available_problems=available_problems)
 
 @contest_bp.route('/contest/new', methods=['GET','POST'])
 @login_required 
@@ -109,7 +111,7 @@ def add_problem_controller():
 
         if not problem_raw or not contest_raw:
             flash("Por favor, preencha todos os campos.", "danger")
-            return render_template("add_problem.html")
+            return redirect(url_for("contest.list_contests_controller"))
 
         try:
             problem_id = int(problem_raw)
@@ -117,10 +119,10 @@ def add_problem_controller():
             add_problem(problem_id,contest_id)
         except ValueError as e:
             flash(str(e), "danger")
-            return redirect(url_for("contest.add_problem_controller"))
+            return redirect(url_for("contest.get_contest_controller", id=contest_id))
 
         flash("Problema Adicionado Com Sucesso!", "success")
-        return redirect(url_for("contest.list_contests_controller"))
+        return redirect(url_for("contest.get_contest_controller", id=contest_id))
 
     return render_template("add_problem.html")
 
