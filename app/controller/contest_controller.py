@@ -81,16 +81,19 @@ def add_user_controller():
             flash("Por favor, preencha todos os campos.", "danger")
             return render_template("add_user.html")
 
+        contest_id = None
         try:
             user_id = int(user_raw)
             contest_id = int(contest_raw)
             add_user(user_id,contest_id)
         except ValueError as e:
             flash(str(e), "danger")
+            if contest_id is not None:
+                return redirect(url_for("contest.get_contest_controller", id=contest_id))
             return redirect(url_for("contest.add_user_controller"))
 
         flash("Usuario Adicionado Com Sucesso!", "success")
-        return redirect(url_for("contest.list_contests_controller"))
+        return redirect(url_for("contest.get_contest_controller", id=contest_id))
 
     return render_template("add_user.html")
 
