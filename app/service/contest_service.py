@@ -69,6 +69,15 @@ def add_problem(problem_id, contest_id):
     contest = Contest.query.get(contest_id)
     problem = Problem.query.get(problem_id)
 
+    if not contest:
+        raise ValueError("Contest não encontrado.")
+
+    if not problem:
+        raise ValueError("Problema não encontrado.")
+
+    if problem in contest.problems:
+        raise ValueError("Problema já adicionado neste contest.")
+
     contest.problems.append(problem)
     db.session.commit()
     return problem
@@ -77,6 +86,15 @@ def remove_problem(problem_id, contest_id):
 
     contest = Contest.query.get(contest_id)
     problem = Problem.query.get(problem_id)
+
+    if not contest:
+        raise ValueError("Contest não encontrado.")
+
+    if not problem:
+        raise ValueError("Problema não encontrado.")
+
+    if problem not in contest.problems:
+        raise ValueError("Problema não está neste contest.")
 
     contest.problems.remove(problem)
     db.session.commit()

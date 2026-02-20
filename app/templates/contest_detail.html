@@ -148,14 +148,29 @@
 			>
 				<input type="hidden" name="contest_id" value="{{ contest.id }}">
 				<div class="mb-3">
-					<label for="problem_id" class="form-label">Selecione um problema</label>
-					<select id="problem_id" name="problem_id" class="form-select" size="8" required>
+					<label class="form-label">Selecione um problema</label>
+					<div class="problem-option-list">
 						{% for problem in available_problems %}
-						<option value="{{ problem.id }}">{{ problem.name }}</option>
+						<div class="problem-option-item">
+							<input
+								type="radio"
+								name="problem_id"
+								id="problem_{{ problem.id }}"
+								value="{{ problem.id }}"
+								class="problem-option-input"
+								{% if loop.first %}checked{% endif %}
+								required
+							>
+							<label for="problem_{{ problem.id }}" class="problem-option-label">
+								{{ problem.name }}
+							</label>
+						</div>
+						{% else %}
+						<p class="text-muted mb-0">Nenhum problema disponível para adicionar.</p>
 						{% endfor %}
-					</select>
+					</div>
 				</div>
-				<button type="submit" class="btn btn-outline-primary">Adicionar Problema</button>
+				<button type="submit" class="btn btn-outline-primary" {% if not available_problems %}disabled{% endif %}>Adicionar Problema</button>
 			</form>
 			{% endif %}
 

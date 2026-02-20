@@ -591,3 +591,47 @@ button:active #theme-icon {
     box-shadow: none;
     border-color: var(--primary-color);
 }
+
+.problem-option-list {
+    max-height: 260px;
+    overflow-y: auto;
+    padding: 0.25rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: var(--bg-input);
+}
+
+.problem-option-item {
+    margin-bottom: 0.4rem;
+}
+
+.problem-option-item:last-child {
+    margin-bottom: 0;
+}
+
+.problem-option-input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.problem-option-label {
+    display: block;
+    width: 100%;
+    padding: 0.55rem 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-body);
+    background-color: transparent;
+    cursor: pointer;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.problem-option-label:hover {
+    border-color: var(--primary-color);
+}
+
+.problem-option-input:checked + .problem-option-label {
+    border-color: var(--primary-color);
+    box-shadow: inset 0 0 0 1px var(--primary-color);
+}
