@@ -7,7 +7,8 @@ from app.service.runner.python_runner import run_python
 from app.service.runner.c_runner import run_c
 from app.service.runner.cpp_runner import run_cpp
 from app.models.test_case import TestCase
-from app.models.contest import ContestRegistration
+from app.models.contest import Contest, ContestRegistration
+from app.service.contest_service import is_contest_running
 
 # Tabela de Pontos Fixa
 POINTS_TABLE = {
@@ -18,11 +19,43 @@ POINTS_TABLE = {
     "Lendário": 200
 }
 
-def create_submission(language,user_id,problem_id,code):
+def create_contest_submission(language,user_id,problem_id,code,contest_id):
+
+    problem = Problem.query.get(problem_id)
+    user = User.query.get(user_id)
+    contest = Contest.query.get(contest_id)
+
+    if not contest:
+        raise ValueError("Torneio não existe")
+
+    if not problem:
+        raise ValueError("Problema não existe")
+
+    if not user:
+        raise ValueError("Usuário não existe")
+
+    if not problem.belongs_only_to_contest:
+        raise ValueError("Problema nao pertence a um torneio!")
+
+    if problem not in contest.problems:
+        raise ValueError("Problema não pertence a este torneio")
+
+    if not is_contest_running(contest.start_time, contest.end_time):
+        raise ValueError("Torneio não está aberto no momento")
+
+    if not user in contest.users:
+        raise ValueError("Usuario nao cadastrado no torneio")
+
+    return create_submission(language,user_id,problem_id,code, allow_contest_problem=True)
+
+def create_submission(language,user_id,problem_id,code, allow_contest_problem=False):
 
     problem = Problem.query.get(problem_id)
     if not problem:
         raise ValueError("Problema não existe")
+
+    if problem.belongs_only_to_contest and not allow_contest_problem:
+        raise ValueError("Problema pertence a um torneio!")
     
     submission = Submission(status = "RUNNING", language = language, user_id = user_id, problem_id = problem_id, code = code)
 
@@ -34,6 +67,7 @@ def create_submission(language,user_id,problem_id,code):
     total = len(test_cases)
     passed = 0
     failed = 0
+    run_result = {"stdout": "", "stderr": ""}
 
     for test in test_cases:
         
@@ -78,27 +112,28 @@ def create_submission(language,user_id,problem_id,code):
 
     #Lógica de pontuação
 
-    # Verifica se o usuário já havia resolvido o problema antes
-    already_solved = Submission.query.filter(
-        Submission.user_id == user_id,
-        Submission.problem_id == problem_id,
-        Submission.status == 'AC',
-        Submission.id != submission.id
-    ).count() 
+    if submission.status == "AC":
+        # Verifica se o usuário já havia resolvido o problema antes
+        already_solved = Submission.query.filter(
+            Submission.user_id == user_id,
+            Submission.problem_id == problem_id,
+            Submission.status == 'AC',
+            Submission.id != submission.id
+        ).count()
 
-    if already_solved == 0:
-        user = User.query.get(user_id)
-        # Busca a dificuldade do problema, caso não exista, define como "Iniciante" para evitar erros
-        difficulty = getattr(problem, 'difficulty', 'Iniciante')
-        points_to_add = POINTS_TABLE.get(difficulty, 10)  # Padrão para "Iniciante" se dificuldade não for encontrada
+        if already_solved == 0:
+            user = User.query.get(user_id)
+            # Busca a dificuldade do problema, caso não exista, define como "Iniciante" para evitar erros
+            difficulty = getattr(problem, 'difficulty', 'Iniciante')
+            points_to_add = POINTS_TABLE.get(difficulty, 10)  # Padrão para "Iniciante" se dificuldade não for encontrada
 
-        #Garante que user.points não seja None e evita erros ao somar
-        if user.points is None:
-            user.points = 0
+            #Garante que user.points não seja None e evita erros ao somar
+            if user.points is None:
+                user.points = 0
 
-        user.points += points_to_add
-        _add_contest_points_for_submission(user_id, problem, submission.id, points_to_add)
-        print(f"Adicionando {points_to_add} pontos ao usuário {user.username} por resolver o problema {problem.name}")
+            user.points += points_to_add
+            _add_contest_points_for_submission(user_id, problem, submission.id, points_to_add)
+            print(f"Adicionando {points_to_add} pontos ao usuário {user.username} por resolver o problema {problem.name}")
 
     submission.total_tests = total
     submission.passed_tests = passed

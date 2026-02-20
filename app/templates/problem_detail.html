@@ -48,10 +48,12 @@
                     <h1 class="fw-bold mb-0 text-primary">{{ problem.name }}</h1>
                 </div>
                 
+                {% if not problem.belongs_only_to_contest %}
                 <a href="{{ url_for('submission.create_submission_controller', problem_id=problem.id) }}" 
                    class="btn btn-primary px-4 py-2 fw-bold shadow-sm">
                     🚀 Enviar Solução
                 </a>
+                {% endif %}
             </div>
 
             <hr class="opacity-25 my-4">
@@ -154,9 +156,11 @@
             <div class="text-center py-5 text-muted">
                 <div class="fs-1 mb-2">📝</div>
                 <p>Você ainda não enviou nenhuma tentativa para este problema.</p>
+                {% if not problem.belongs_only_to_contest %}
                 <a href="{{ url_for('submission.create_submission_controller', problem_id=problem.id) }}" class="btn btn-outline-primary btn-sm">
                     Fazer sua primeira tentativa
                 </a>
+                {% endif %}
             </div>
             {% endif %}
         </div>
