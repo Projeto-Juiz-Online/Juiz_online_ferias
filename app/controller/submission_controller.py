@@ -11,6 +11,10 @@ def create_submission_controller(problem_id):
 
     problem = Problem.query.get_or_404(problem_id)
 
+    if problem.belongs_only_to_contest:
+        flash("Este problema pertence a um torneio e não pode ser submetido por esta rota.", "danger")
+        return redirect(url_for("problem.get_problem_controller", id=problem_id))
+
     if request.method == "POST":
         code = request.form.get("code")
         language = request.form.get("language")

@@ -54,6 +54,10 @@ def get_problem_controller(id):
     if not problem:
         flash("Problema não encontrado.", "danger")
         return redirect(url_for("problem.list_problems_controller"))
+
+    if problem.belongs_only_to_contest and (not current_user.is_authenticated or not current_user.is_admin):
+        flash("Este problema é exclusivo de torneio.", "danger")
+        return redirect(url_for("problem.list_problems_controller"))
     
     user_submissions = []
     
