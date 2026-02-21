@@ -8,7 +8,7 @@ from app.service.runner.c_runner import run_c
 from app.service.runner.cpp_runner import run_cpp
 from app.models.test_case import TestCase
 from app.models.contest import Contest, ContestRegistration
-from app.service.contest_service import is_contest_running
+from app.service.contest_service import is_contest_running, get_brazil_now_naive
 
 # Tabela de Pontos Fixa
 POINTS_TABLE = {
@@ -19,7 +19,7 @@ POINTS_TABLE = {
     "Lendário": 200
 }
 
-def create_contest_submission(language,user_id,problem_id,code,contest_id):
+def create_contest_submission(language,user_id,problem_id,code,contest_id, time_of_submission=None):
 
     problem = Problem.query.get(problem_id)
     user = User.query.get(user_id)
@@ -46,9 +46,19 @@ def create_contest_submission(language,user_id,problem_id,code,contest_id):
     if not user in contest.users:
         raise ValueError("Usuario nao cadastrado no torneio")
 
-    return create_submission(language,user_id,problem_id,code, allow_contest_problem=True)
+    return create_submission(
+        language,
+        user_id,
+        problem_id,
+        code,
+        time_of_submission=time_of_submission,
+        allow_contest_problem=True
+    )
 
-def create_submission(language,user_id,problem_id,code, allow_contest_problem=False):
+def create_submission(language,user_id,problem_id,code, time_of_submission=None, allow_contest_problem=False):
+
+    if time_of_submission is None:
+        time_of_submission = get_brazil_now_naive()
 
     problem = Problem.query.get(problem_id)
     if not problem:
@@ -57,7 +67,14 @@ def create_submission(language,user_id,problem_id,code, allow_contest_problem=Fa
     if problem.belongs_only_to_contest and not allow_contest_problem:
         raise ValueError("Problema pertence a um torneio!")
     
-    submission = Submission(status = "RUNNING", language = language, user_id = user_id, problem_id = problem_id, code = code)
+    submission = Submission(
+        status = "RUNNING",
+        language = language,
+        user_id = user_id,
+        problem_id = problem_id,
+        code = code,
+        time_of_submission = time_of_submission
+    )
 
     db.session.add(submission)
     db.session.commit()
@@ -140,7 +157,7 @@ def create_submission(language,user_id,problem_id,code, allow_contest_problem=Fa
     submission.failed_tests = failed    
     submission.stdout = run_result["stdout"]
     submission.stderr = run_result["stderr"]
-    
+
     db.session.commit()
     return submission
 

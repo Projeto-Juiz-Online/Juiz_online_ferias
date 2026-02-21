@@ -16,6 +16,7 @@ class Submission(db.Model):
     failed_tests = db.Column(db.Integer, default=0)
     stdout = db.Column(db.Text)
     stderr = db.Column(db.Text)
+    time_of_submission = db.Column(db.DateTime, nullable=False)
     code = db.Column(db.Text, nullable = False)    #esse e o codigo do problema
     user = db.relationship("User", backref="submissions") #essas duas ultimas linhas e so pra facilitar a escrever o codigo
 

@@ -22,7 +22,7 @@
                 <div>
                     <strong>Status:</strong> {{ sub.status }} <br>
                     <small class="text-muted">
-                        {{ sub.language }} · {{ sub.submitted_at.strftime("%d/%m/%Y %H:%M") }}
+                        {{ sub.language }} · {{ (sub.time_of_submission or sub.submitted_at).strftime("%d/%m/%Y %H:%M") }}
                     </small>
                 </div>
 
