@@ -106,6 +106,10 @@ def remove_problem(problem_id, contest_id):
 def list_contests():
     return Contest.query.all()
 
+def list_contest_problems(id):
+    contest = Contest.query.get(id)
+    return contest.problems
+
 def get_contest(contest_id):
     return Contest.query.get(contest_id)
 

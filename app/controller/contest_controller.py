@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
-from app.service.contest_service import create_contest, add_user, add_problem, delete_contest, remove_user, remove_problem, list_contests, get_contest, get_contest_ranking
+from app.service.contest_service import create_contest, add_user, add_problem, delete_contest, remove_user, remove_problem, list_contests, get_contest, get_contest_ranking, list_contest_problems
 from app.service.problem_service import list_contest_only_problems
 from datetime import datetime
 from zoneinfo import ZoneInfo
@@ -147,3 +147,39 @@ def delete_contest_controller(contest_id):
         print(f"Erro Delete Contest: {e}")
         
     return redirect(url_for('contest.list_contests_controller'))
+
+@contest_bp.route('/contests/<int:contest_id>/running', methods=['GET'])
+@login_required
+def run_contest(contest_id):
+
+    contest = get_contest(contest_id)
+
+    if not contest:
+        flash("Contest não encontrado.", "danger")
+        return redirect(url_for("contest.list_contests_controller"))
+
+    search = request.args.get("search", "").strip()
+    difficulty = request.args.get("difficulty")
+
+    contest_problems = list_contest_problems(contest_id)
+
+    if search:
+        contest_problems = [
+            problem for problem in contest_problems
+            if search.lower() in problem.name.lower()
+        ]
+
+    if difficulty and difficulty != 'Todos':
+        contest_problems = [
+            problem for problem in contest_problems
+            if problem.difficulty == difficulty
+        ]
+
+    return render_template(
+        "run_contest.html",
+        contest=contest,
+        problems=contest_problems,
+        current_diff=difficulty,
+        search=search
+    )
+    
