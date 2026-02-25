@@ -80,6 +80,15 @@
 			</div>
 
 			<div class="mt-4 d-flex gap-2 flex-wrap">
+				{% if current_user.is_authenticated %}
+				<a
+					href="{{ url_for('contest.run_contest', contest_id=contest.id) }}"
+					class="btn btn-primary flex-grow-1 d-flex align-items-center justify-content-center gap-2"
+				>
+					🚀 Rodar Contest
+				</a>
+				{% endif %}
+
 				{% if current_user.is_authenticated and current_user.is_admin %}
 				<form 
 					    action="{{ url_for('contest.delete_contest_controller', contest_id=contest.id) }}" 

@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% block title %}{{ contest.name }} | Rodar Contest{% endblock %}
+
+{% block content %}
+
+<div class="mb-3">
+	<a href="{{ url_for('contest.get_contest_controller', id=contest.id) }}"
+	   class="text-decoration-none d-inline-flex align-items-center gap-2 back-link">
+		<span class="fs-5">←</span>
+		<span class="fw-bold small text-uppercase">Voltar para Contest</span>
+	</a>
+</div>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+	<div>
+		<h1 class="fw-bold mb-0">{{ contest.name }}</h1>
+		<p class="text-muted small mb-0">Lista de problemas deste contest.</p>
+	</div>
+</div>
+
+<div class="surface p-2 mb-4 shadow-sm border-0 d-flex gap-2 overflow-auto" style="border-radius: 50px;">
+	<a href="{{ url_for('contest.run_contest', contest_id=contest.id) }}"
+	   class="btn rounded-pill fw-bold px-4 {% if not current_diff or current_diff == 'Todos' %}btn-dark{% else %}btn-ghost{% endif %}">
+	   Todos
+	</a>
+
+	<a href="{{ url_for('contest.run_contest', contest_id=contest.id, difficulty='Iniciante') }}"
+	   class="btn rounded-pill fw-bold px-3 {% if current_diff == 'Iniciante' %}diff-iniciante border-0{% else %}btn-ghost text-success{% endif %}">
+	   Iniciante
+	</a>
+
+	<a href="{{ url_for('contest.run_contest', contest_id=contest.id, difficulty='Fácil') }}"
+	   class="btn rounded-pill fw-bold px-3 {% if current_diff == 'Fácil' %}diff-facil border-0{% else %}btn-ghost text-info{% endif %}">
+	   Fácil
+	</a>
+
+	<a href="{{ url_for('contest.run_contest', contest_id=contest.id, difficulty='Médio') }}"
+	   class="btn rounded-pill fw-bold px-3 {% if current_diff == 'Médio' %}diff-medio border-0{% else %}btn-ghost text-warning{% endif %}">
+	   Médio
+	</a>
+
+	<a href="{{ url_for('contest.run_contest', contest_id=contest.id, difficulty='Difícil') }}"
+	   class="btn rounded-pill fw-bold px-3 {% if current_diff == 'Difícil' %}diff-dificil border-0{% else %}btn-ghost text-danger{% endif %}">
+	   Difícil
+	</a>
+
+	<a href="{{ url_for('contest.run_contest', contest_id=contest.id, difficulty='Lendário') }}"
+	   class="btn rounded-pill fw-bold px-3 {% if current_diff == 'Lendário' %}diff-lendario border-0{% else %}btn-ghost text-purple{% endif %}">
+	   Lendário
+	</a>
+</div>
+
+<div class="surface p-4 mb-4 shadow-sm border-0">
+	<form method="GET" class="row g-3">
+		{% if current_diff %}
+		<input type="hidden" name="difficulty" value="{{ current_diff }}">
+		{% endif %}
+
+		<div class="col-md-10">
+			<div class="input-group">
+				<span class="input-group-text bg-transparent border-end-0 text-muted">🔍</span>
+				<input
+					type="text"
+					name="search"
+					value="{{ search }}"
+					class="form-control form-control-lg border-start-0 ps-0"
+					placeholder="Buscar problema pelo nome..."
+					style="box-shadow: none;">
+			</div>
+		</div>
+		<div class="col-md-2">
+			<button class="btn btn-primary btn-lg w-100 fw-bold">
+				Buscar
+			</button>
+		</div>
+	</form>
+</div>
+
+<div class="row g-4">
+	{% for problem in problems %}
+		<div class="col-md-6 col-lg-4">
+			<div class="surface p-4 h-100 d-flex flex-column justify-content-between position-relative shadow-sm transition-hover"
+				 style="border-radius: 12px; transition: transform 0.2s;">
+
+				<div class="mb-3">
+					<div class="d-flex flex-column gap-2">
+
+						{% set diff = problem.difficulty %}
+						{% set diff_class = 'diff-iniciante' %}
+
+						{% if diff == 'Fácil' %} {% set diff_class = 'diff-facil' %}
+						{% elif diff == 'Médio' %} {% set diff_class = 'diff-medio' %}
+						{% elif diff == 'Difícil' %} {% set diff_class = 'diff-dificil' %}
+						{% elif diff == 'Lendário' %} {% set diff_class = 'diff-lendario' %}
+						{% endif %}
+
+						<div class="d-flex align-items-center">
+							<span class="badge badge-diff {{ diff_class }} rounded-pill" style="font-size: 0.7rem;">
+								{{ problem.difficulty }}
+							</span>
+						</div>
+
+						<h5 class="fw-bold mb-0 text-truncate pe-4" title="{{ problem.name }}">
+							{{ problem.name }}
+						</h5>
+
+						<p class="text-muted small mt-2 mb-0" style="display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+							{{ problem.description }}
+						</p>
+					</div>
+				</div>
+
+				<div class="mt-3">
+					<a href="{{ url_for('problem.get_problem_controller', id=problem.id) }}"
+					   class="btn btn-primary w-100 mb-2 btn-outline-adaptive">
+						Resolver Desafio
+					</a>
+				</div>
+
+			</div>
+		</div>
+
+	{% else %}
+		<div class="col-12">
+			<div class="surface p-5 text-center shadow-sm">
+				<div class="fs-1 mb-3">🔍</div>
+				<h4 class="fw-bold">Nenhum problema encontrado</h4>
+				<p class="text-muted">Não achamos problemas neste contest com esse filtro.</p>
+				<a href="{{ url_for('contest.run_contest', contest_id=contest.id) }}" class="btn btn-outline-secondary mt-2">Limpar Filtros</a>
+			</div>
+		</div>
+	{% endfor %}
+</div>
+
+{% endblock %}
