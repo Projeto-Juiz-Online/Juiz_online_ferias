@@ -28,6 +28,10 @@ def list_problems():
 
     return Problem.query.all()
 
+def list_contest_only_problems():
+
+    return Problem.query.filter_by(belongs_only_to_contest=True).all()
+
 def delete_problem(id):
 
     problem = Problem.query.filter_by(id=id).first()

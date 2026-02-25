@@ -75,6 +75,9 @@ def add_problem(problem_id, contest_id):
     if not problem:
         raise ValueError("Problema não encontrado.")
 
+    if not problem.belongs_only_to_contest:
+        raise ValueError("Problema pertence ao treino livre.")
+
     if problem in contest.problems:
         raise ValueError("Problema já adicionado neste contest.")
 

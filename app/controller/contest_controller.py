@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from app.service.contest_service import create_contest, add_user, add_problem, delete_contest, remove_user, remove_problem, list_contests, get_contest, get_contest_ranking
-from app.service.problem_service import list_problems
+from app.service.problem_service import list_contest_only_problems
 from datetime import datetime
 from zoneinfo import ZoneInfo
 from flask_login import login_required,  current_user
@@ -33,7 +33,7 @@ def get_contest_controller(id):
 
     now = get_brazil_now_naive()
     ranking = get_contest_ranking(id)
-    available_problems = list_problems()
+    available_problems = list_contest_only_problems()
     return render_template("contest_detail.html", contest=contest, now=now, ranking=ranking, available_problems=available_problems)
 
 @contest_bp.route('/contest/new', methods=['GET','POST'])
