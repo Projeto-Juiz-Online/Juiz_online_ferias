@@ -35,6 +35,7 @@ JuizOnline
 │   │   ├── __init__.py
 │   │   ├── admin_controller.py
 │   │   ├── auth_controller.py
+│   │   ├── contest_controller.py
 │   │   ├── problem_controller.py
 │   │   ├── ranking_controller.py
 │   │   ├── submission_controller.py
@@ -42,6 +43,7 @@ JuizOnline
 │   ├── database.db
 │   ├── models
 │   │   ├── __init__.py
+│   │   ├── contest.py
 │   │   ├── problem.py
 │   │   ├── submission.py
 │   │   ├── test_case.py
@@ -49,6 +51,7 @@ JuizOnline
 │   ├── service
 │   │   ├── __init__.py
 │   │   ├── auth_service.py
+│   │   ├── contest_service.py
 │   │   ├── database.py
 │   │   ├── judge.py
 │   │   ├── problem_service.py
@@ -65,12 +68,17 @@ JuizOnline
 │   │   └── js
 │   │       └── main.js
 │   ├── templates
+│   │   ├── add_problem.html
+│   │   ├── add_user.html
 │   │   ├── admin_dashboard.html
 │   │   ├── base.html
+│   │   ├── contest_detail.html
+│   │   ├── create_contest.html
 │   │   ├── create_problem.html
 │   │   ├── create_submission.html
 │   │   ├── create_test_case.html
 │   │   ├── home.html
+│   │   ├── list_contests.html
 │   │   ├── list_problem_submissions.html
 │   │   ├── list_problems.html
 │   │   ├── list_test_cases.html
@@ -80,6 +88,7 @@ JuizOnline
 │   │   ├── problem_detail.html
 │   │   ├── ranking.html
 │   │   ├── register.html
+│   │   ├── run_contest.html
 │   │   └── submission.html
 │   └── utils
 │       ├── decorators.py
@@ -94,14 +103,6 @@ JuizOnline
 │   │   └── Dockerfile
 │   └── python
 │       └── Dockerfile
-├── migrations
-│   ├── README
-│   ├── alembic.ini
-│   ├── env.py
-│   ├── script.py.mako
-│   └── versions
-│       └── 12954c2e4e01_.py
-├── readme.md
 ├── requirements.txt
 ├── run.py
 └── tests
