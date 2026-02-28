@@ -8,6 +8,7 @@ from app.utils.decorators import admin_required
 from app.service.database import db
 from app.models.contest import Contest
 from app.models.submission import Submission  
+from app.service.ranking_service import get_ranking
 
 contest_bp = Blueprint('contest',__name__)
 
@@ -175,11 +176,14 @@ def run_contest(contest_id):
             if problem.difficulty == difficulty
         ]
 
+    ranking = get_ranking()[:10]
+
     return render_template(
         "run_contest.html",
         contest=contest,
         problems=contest_problems,
         current_diff=difficulty,
-        search=search
+        search=search,
+        ranking=ranking
     )
     

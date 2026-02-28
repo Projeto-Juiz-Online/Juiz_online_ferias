@@ -76,9 +76,11 @@
 	</form>
 </div>
 
-<div class="row g-4">
+<div class="row g-4 align-items-start">
+	<div class="col-lg-9">
+		<div class="row g-4">
 	{% for problem in problems %}
-		<div class="col-md-6 col-lg-4">
+		<div class="col-md-6 col-xl-4">
 			<div class="surface p-4 h-100 d-flex flex-column justify-content-between position-relative shadow-sm transition-hover"
 				 style="border-radius: 12px; transition: transform 0.2s;">
 
@@ -130,6 +132,30 @@
 			</div>
 		</div>
 	{% endfor %}
+</div>
+	</div>
+
+	<div class="col-lg-3">
+		<div class="surface p-4 shadow-sm border-0">
+			<h5 class="fw-bold mb-3">Ranking</h5>
+
+			{% if ranking %}
+				<div class="d-flex flex-column gap-2">
+					{% for user in ranking %}
+						<div class="d-flex justify-content-between align-items-center py-1 border-bottom">
+							<div class="d-flex align-items-center gap-2">
+								<span class="text-muted small">#{{ loop.index }}</span>
+								<span class="fw-semibold">{{ user.username }}</span>
+							</div>
+							<span class="small text-muted">{{ user.points }} pts</span>
+						</div>
+					{% endfor %}
+				</div>
+			{% else %}
+				<p class="text-muted mb-0">empty</p>
+			{% endif %}
+		</div>
+	</div>
 </div>
 
 {% endblock %}
